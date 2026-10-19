@@ -1,0 +1,26 @@
+{
+  "name": "playable-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Super Stylist 3D 换装试玩：运行时 + Studio 控制面板 + Unity 资源导出工具",
+  "scripts": {
+    "dev:runtime": "node tools/build-dev-data.mjs && vite --config vite.runtime.config.js",
+    "build:placeholder": "node tools/build-placeholder.mjs",
+    "build": "node tools/build-studio.mjs",
+    "export:unity": "node tools/unity-export/cli.mjs"
+  },
+  "dependencies": {
+    "@gltf-transform/core": "^4.5.1",
+    "@gltf-transform/extensions": "^4.5.1",
+    "@gltf-transform/functions": "^4.5.1",
+    "fbx2gltf": "^0.9.7-p1",
+    "js-yaml": "^5.5.0",
+    "jszip": "^3.10.2",
+    "meshoptimizer": "^1.3.0",
+    "sharp": "^0.35.5",
+    "three": "^0.186.1",
+    "vite": "^8.3.4",
+    "vite-plugin-singlefile": "^2.3.3"
+  }
+}

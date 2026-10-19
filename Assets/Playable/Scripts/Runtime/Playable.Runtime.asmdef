@@ -1,0 +1,9 @@
+{
+  "name": "Playable.Runtime",
+  "rootNamespace": "SSTPlayable",
+  "references": [],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "autoReferenced": true
+}

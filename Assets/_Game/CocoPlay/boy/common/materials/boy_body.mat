@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: boy_body
+  m_Shader: {fileID: 4800000, guid: 68f46ad9c8f5e40c3a698ef105981bf1, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _DECAL_OFF
+  - _DISCOLOR_OFF
+  - _RIM_WRAP_ON
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BottomTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DecalTex1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DecalTex2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DecalTex3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: dcc6d0bc56a1a4607ae1c4b38bb594c8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PropertyFactorTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ReflectCube:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonCube:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonShade:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BottomLayer: 0
+    - _ColorFactor: 1
+    - _Cull: 2
+    - _Cutoff: 0.5
+    - _Decal: 0
+    - _DecalTex1UV2: 0
+    - _DecalTex2UV2: 0
+    - _DecalTex3UV2: 0
+    - _Discolor: 0
+    - _DstBlend: 0
+    - _Fog: 0
+    - _HsvAddY: 0.05
+    - _HsvAddZ: 0.5
+    - _HsvDenominatorY: 2
+    - _HsvDenominatorZ: 2
+    - _HsvLimitY: 0.1
+    - _HsvLimitZ: 0.9
+    - _Hue: 0
+    - _LightAdd: 0.5
+    - _LightMax: 0.9
+    - _LightPower: 2.15
+    - _LightRatio: 2
+    - _Lightness: 0
+    - _MixingFactor: 1
+    - _Mode: 0
+    - _Normalmap: 0
+    - _Reflection: 0
+    - _RimPower: 2
+    - _RimWrap: 1
+    - _SaturAdd: 0.05
+    - _SaturMin: 0.1
+    - _SaturRatio: 2
+    - _Saturation: 0
+    - _Shininess: 0.078125
+    - _Specular: 0
+    - _SrcBlend: 1
+    - _Toonmap: 0
+    - _WrapPower: 0.75
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 0.631, g: 0.596, b: 0.596, a: 1}
+    - _Discolor: {r: 1, g: 1, b: 1, a: 0}
+    - _HueColor: {r: 1, g: 1, b: 1, a: 1}
+    - _PosOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _ReflectColor: {r: 1, g: 1, b: 1, a: 0.5}
+    - _RimColor: {r: 0.392, g: 0.392, b: 0.588, a: 0}
+    - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _ViewTranform: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

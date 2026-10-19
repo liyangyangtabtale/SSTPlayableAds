@@ -1,0 +1,8 @@
+{
+  "name": "Playable.Editor",
+  "rootNamespace": "SSTPlayable.Editor",
+  "references": ["Playable.Runtime"],
+  "includePlatforms": ["Editor"],
+  "excludePlatforms": [],
+  "autoReferenced": true
+}

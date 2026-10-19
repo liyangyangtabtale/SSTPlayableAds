@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs -I{} sh -c 'echo \"=== {} ===\"; unzip -p {} AndroidManifest.xml 2>/dev/null | grep -i \"authorities\\\\|LevelPlay\\\\|vungle\" ')",
+      "Bash(grep -v \"^$\")",
+      "Bash(git -C /Users/liyangyang/Cocomyboutique log --oneline --all)",
+      "Bash(git -C /Users/liyangyang/Cocomyboutique log --oneline feature_sprint177)",
+      "Bash(git -C /Users/liyangyang/Cocomyboutique show HEAD --name-only)",
+      "Bash(git -C /Users/liyangyang/Cocomyboutique show f83d7ed8904 --name-only)",
+      "Bash(python3 -m json.tool)"
+    ]
+  }
+}

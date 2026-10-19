@@ -1,0 +1,11 @@
+{
+ "character": {"rig": "Assets/_Game/CocoPlay/Role/role/basic/common/models/player.FBX", "parts": [
+   {"role": "head", "fbx": "Assets/_Game/CocoPlay/Role/role/basic/common/models/head.FBX", "material": "Assets/_Game/CocoPlay/Role/role/basic/common/materials/head_color_101.mat"},
+   {"role": "body", "fbx": "Assets/_Game/CocoPlay/Role/role/basic/common/models/body.FBX", "material": "Assets/_Game/CocoPlay/Role/role/basic/common/materials/body_color_101.mat"},
+   {"role": "eye", "fbx": "Assets/_Game/CocoPlay/Role/role/basic/common/models/eyeball.FBX", "material": "Assets/_Game/CocoPlay/Role/role/basic/common/materials/eyeball.mat"}]},
+ "outfits": [{"name": "Casual Dress 010", "prefab": "Assets/_Game/CocoPlay/Role/role/dress/casual_dress_010/casual_dress_010.prefab"}, {"name": "Designer Dress 424", "prefab": "Assets/_Game/CocoPlay/Role/role/dress/designer_dress_424/designer_dress_424.prefab"}],
+ "hair": [{"name": "Hair 001", "prefab": "Assets/_Game/CocoPlay/Role/role/hair/models/hair_001.prefab"}],
+ "makeup": [{"name": "Facepaint 001", "texture": "Assets/Playable/Makeup/facepaint_001.png"}],
+ "backgrounds": [{"name": "Bg01", "image": "Assets/Playable/UI/Backgrounds/bg01.png"}],
+ "animations": [{"fbx": "Assets/_Game/CocoPlay/Inherent/Animator/player@handclap.FBX"}, {"fbx": "Assets/_Game/CocoPlay/Inherent/Animator/message@01_10.FBX", "prefix": "phone_"}]
+}

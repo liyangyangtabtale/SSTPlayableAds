@@ -1,0 +1,305 @@
+{
+ "schema": 1,
+ "name": "Meet My Crush",
+ "theme": {
+  "id": "crush",
+  "backgrounds": {
+   "play": "bg_play",
+   "end": "bg_end"
+  },
+  "colors": {
+   "primary": "#f566a3",
+   "soft": "#fc9ecc",
+   "ink": "#3d2640"
+  },
+  "banner": {
+   "style": "pill",
+   "font": "sans"
+  },
+  "texts": {
+   "bannerTitle": "MEET MY CRUSH",
+   "introSender": "My Crush",
+   "introMessage": "Tonight? Let's go out!",
+   "confirm": "Confirm",
+   "cta": "Play Now",
+   "goodTitle": "Perfect Date Look!",
+   "goodSub": "Your crush can't take their eyes off you",
+   "badTitle": "Oh no...",
+   "badSub": "That outfit was a fashion disaster"
+  }
+ },
+ "flow": {
+  "intro": {
+   "enabled": true,
+   "idle": 1.2,
+   "bubbleDelay": 1,
+   "bubbleStay": 1
+  },
+  "outro": {
+   "enabled": true,
+   "flash": 0.6,
+   "uiDelay": 0.3,
+   "ctaDelay": 2
+  },
+  "goodThreshold": 0.6,
+  "stages": [
+   {
+    "type": "outfit",
+    "enabled": true,
+    "columns": 2,
+    "count": 6,
+    "options": [
+     {
+      "asset": "casual_dress_010",
+      "good": false
+     },
+     {
+      "asset": "designer_dress_134",
+      "good": true
+     },
+     {
+      "asset": "designer_dress_417",
+      "good": true
+     },
+     {
+      "asset": "designer_dress_424",
+      "good": false
+     },
+     {
+      "asset": "romantic_dress_021",
+      "good": true
+     },
+     {
+      "asset": "party_dress_179",
+      "good": true
+     }
+    ]
+   },
+   {
+    "type": "makeup",
+    "enabled": true,
+    "columns": 2,
+    "count": 6,
+    "options": [
+     {
+      "asset": "facepaint_001",
+      "good": true
+     },
+     {
+      "asset": "facepaint_002",
+      "good": true
+     },
+     {
+      "asset": "facepaint_003",
+      "good": true
+     },
+     {
+      "asset": "facepaint_004",
+      "good": false
+     },
+     {
+      "asset": "facepaint_005",
+      "good": false
+     },
+     {
+      "asset": "facepaint_006",
+      "good": false
+     }
+    ]
+   },
+   {
+    "type": "hair",
+    "enabled": true,
+    "columns": 2,
+    "count": 6,
+    "options": [
+     {
+      "asset": "hair_001",
+      "good": false
+     },
+     {
+      "asset": "hair_002",
+      "good": false
+     },
+     {
+      "asset": "hair_003",
+      "good": true
+     },
+     {
+      "asset": "hair_004",
+      "good": true
+     },
+     {
+      "asset": "hair_005",
+      "good": false
+     },
+     {
+      "asset": "hair_006",
+      "good": true
+     },
+     {
+      "asset": "hair_007",
+      "good": true
+     }
+    ]
+   },
+   {
+    "type": "shoes",
+    "enabled": true,
+    "columns": 2,
+    "count": 6,
+    "options": [
+     {
+      "asset": "casual_shoes_004",
+      "good": true
+     },
+     {
+      "asset": "casual_shoes_020",
+      "good": true
+     },
+     {
+      "asset": "designer_shoes_230",
+      "good": true
+     },
+     {
+      "asset": "designer_shoes_274",
+      "good": false
+     },
+     {
+      "asset": "designer_shoes_476",
+      "good": false
+     },
+     {
+      "asset": "glam_shoes_021",
+      "good": true
+     }
+    ]
+   }
+  ]
+ },
+ "character": {
+  "model": "character",
+  "partner": "partner",
+  "look": "look_a",
+  "defaultOutfit": "party_dress_086",
+  "defaultHair": "hair_007",
+  "partnerEnabled": true
+ },
+ "layout": {
+  "character": {
+   "x": 0,
+   "y": 0,
+   "scale": 1
+  },
+  "wardrobe": {
+   "right": 30,
+   "top": 250,
+   "width": 480,
+   "gap": 14,
+   "cellW": 212,
+   "cellH": 250,
+   "confirmOffset": 36
+  },
+  "outro": {
+   "girl": {
+    "x": -0.55,
+    "scale": 1,
+    "yaw": 15
+   },
+   "boy": {
+    "x": 0.55,
+    "scale": 1,
+    "yaw": -15
+   }
+  }
+ },
+ "lighting": {
+  "azimuth": 40,
+  "elevation": 35,
+  "intensity": 1,
+  "color": "#ffffff",
+  "ambient": 0.35,
+  "ambientColor": "#ffffff",
+  "rim": {
+   "strength": 0.4,
+   "power": 2.5,
+   "color": "#aab4ff"
+  },
+  "wrap": 0.5,
+  "shadow": {
+   "enabled": true,
+   "opacity": 0.45,
+   "size": 1
+  }
+ },
+ "camera": {
+  "fov": 30,
+  "distance": 4.3,
+  "height": 0.98,
+  "shiftX": 0.27,
+  "outroShiftX": 0,
+  "outroDistance": 5.8,
+  "outroHeight": 1.25
+ },
+ "rotation": {
+  "enabled": true,
+  "inertia": 0.92,
+  "hint": {
+   "enabled": true,
+   "style": "icon"
+  },
+  "nudge": true
+ },
+ "animations": {
+  "idle": [
+   "anim_standby2"
+  ],
+  "intro": [
+   "anim_takephone"
+  ],
+  "introReact": [
+   "anim_endphone"
+  ],
+  "pickGood": [
+   "anim_clap"
+  ],
+  "pickBad": [
+   "anim_no"
+  ],
+  "outroGood": [
+   "anim_win"
+  ],
+  "outroBad": [
+   "anim_lose"
+  ],
+  "partnerIdle": [
+   "anim_boy"
+  ]
+ },
+ "phone": {
+  "model": "phone",
+  "take": "anim_phonetake",
+  "end": "anim_phoneend"
+ },
+ "sound": {
+  "enabled": true,
+  "volume": 0.8,
+  "events": {
+   "click": "sfx_click",
+   "dress": "sfx_dress",
+   "stageDone": "sfx_stageDone",
+   "transition": "sfx_transition",
+   "intro": "sfx_intro",
+   "outroGood": "sfx_outroGood",
+   "outroBad": "sfx_outroBad",
+   "cta": "sfx_cta"
+  }
+ },
+ "export": {
+  "storeUrls": {
+   "ios": "",
+   "android": ""
+  },
+  "channel": "applovin"
+ }
+}

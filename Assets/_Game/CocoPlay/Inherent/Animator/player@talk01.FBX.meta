@@ -1,0 +1,511 @@
+fileFormatVersion: 2
+guid: 3e78536cc05294880a4abf7a3ff41ea5
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Bip001
+    100002: Bip001 Head
+    100004: Bip001 L Calf
+    100006: Bip001 L Clavicle
+    100008: Bip001 L Finger0
+    100010: Bip001 L Finger01
+    100012: Bip001 L Finger02
+    100014: Bip001 L Finger1
+    100016: Bip001 L Finger11
+    100018: Bip001 L Finger12
+    100020: Bip001 L Finger2
+    100022: Bip001 L Finger21
+    100024: Bip001 L Finger22
+    100026: Bip001 L Finger3
+    100028: Bip001 L Finger31
+    100030: Bip001 L Finger32
+    100032: Bip001 L Finger4
+    100034: Bip001 L Finger41
+    100036: Bip001 L Finger42
+    100038: Bip001 L Foot
+    100040: Bip001 L Forearm
+    100042: Bip001 L Hand
+    100044: Bip001 L Thigh
+    100046: Bip001 L Toe0
+    100048: Bip001 L UpperArm
+    100050: Bip001 Neck
+    100052: Bip001 Pelvis
+    100054: Bip001 R Calf
+    100056: Bip001 R Clavicle
+    100058: Bip001 R Finger0
+    100060: Bip001 R Finger01
+    100062: Bip001 R Finger02
+    100064: Bip001 R Finger1
+    100066: Bip001 R Finger11
+    100068: Bip001 R Finger12
+    100070: Bip001 R Finger2
+    100072: Bip001 R Finger21
+    100074: Bip001 R Finger22
+    100076: Bip001 R Finger3
+    100078: Bip001 R Finger31
+    100080: Bip001 R Finger32
+    100082: Bip001 R Finger4
+    100084: Bip001 R Finger41
+    100086: Bip001 R Finger42
+    100088: Bip001 R Foot
+    100090: Bip001 R Forearm
+    100092: Bip001 R Hand
+    100094: Bip001 R Thigh
+    100096: Bip001 R Toe0
+    100098: Bip001 R UpperArm
+    100100: Bip001 Spine
+    100102: Bip001 Spine1
+    100104: Bip001 Spine2
+    100106: Bone001
+    100108: Bone001(mirrored)
+    100110: Bone002
+    100112: Bone002(mirrored)
+    100114: eyeball
+    100116: eyebrow
+    100118: eyelash
+    100120: head
+    100122: //RootNode
+    100124: tongue
+    100126: tooth
+    100128: bone_bag_00
+    100130: bone_bag_01
+    100132: bone_bag_02
+    100134: bone_bag_03
+    100136: bone_bag_04
+    100138: Bone032
+    100140: Bone033
+    100142: Bone034
+    100144: Bone035
+    100146: Bone047
+    100148: Bone048
+    100150: Bone049
+    100152: Bone051
+    100154: Bone052
+    100156: Bone054
+    100158: Bone055
+    100160: Bone056
+    100162: Bone057
+    100164: Bone058
+    100166: Bone059
+    100168: Bone068
+    100170: Bone069
+    100172: Bone070
+    100174: Bone003
+    100176: Bone007
+    100178: Bone011
+    100180: Bone012
+    100182: Bone013
+    100184: Bone014
+    100186: Bone036
+    100188: Bone037
+    100190: Bone038
+    100192: Bone039
+    100194: Bone040
+    100196: Bone041
+    100198: Bone050
+    100200: Bone053
+    100202: Bone062
+    100204: Bone063
+    100206: Bone064
+    100208: Bone065
+    100210: Bone066
+    100212: Bone067
+    100214: Bone071
+    100216: Bone072
+    100218: Bone073
+    100220: Bone074
+    100222: Bone076
+    100224: Bone076(mirrored)
+    100226: Bone077
+    100228: Bone077(mirrored)
+    100230: Bone078
+    100232: Bone078(mirrored)
+    100234: Bone079
+    100236: Bone079(mirrored)
+    100238: Bone081
+    100240: Bone081(mirrored)
+    100242: Bone082
+    100244: Bone082(mirrored)
+    100246: Bone083
+    100248: Bone083(mirrored)
+    100250: Bone084
+    100252: Bone084(mirrored)
+    100254: Bone086
+    100256: Bone086(mirrored)
+    100258: Bone087
+    100260: Bone087(mirrored)
+    100262: Bone088
+    100264: Bone088(mirrored)
+    100266: Bone091
+    100268: Bone091(mirrored)
+    100270: Bone092
+    100272: Bone092(mirrored)
+    100274: Bone093
+    100276: Bone093(mirrored)
+    100278: Bone096
+    100280: Bone096(mirrored)
+    100282: Bone097
+    100284: Bone097(mirrored)
+    100286: Bone098
+    100288: Bone098(mirrored)
+    100290: Bone101
+    100292: Bone101(mirrored)
+    100294: Bone102
+    100296: Bone102(mirrored)
+    100298: Bone103
+    100300: Bone103(mirrored)
+    100302: Bone104
+    100304: Bone104(mirrored)
+    100306: Bone105
+    100308: Bone105(mirrored)
+    100310: Bone107
+    100312: Bone108
+    100314: Bone109
+    100316: Bone110
+    100318: Bone111
+    100320: Bone113
+    100322: Bone113(mirrored)
+    100324: Bone114
+    100326: Bone114(mirrored)
+    100328: Bone115
+    100330: Bone115(mirrored)
+    100332: Bone116
+    100334: Bone116(mirrored)
+    100336: Bone117
+    100338: Bone117(mirrored)
+    100340: Bone134
+    100342: Bone135
+    100344: Bone137
+    100346: Bone138
+    100348: Bone146
+    100350: Bone146(mirrored)
+    100352: Bone147
+    100354: Bone147(mirrored)
+    100356: Bone148
+    100358: Bone148(mirrored)
+    100360: Bone150
+    100362: Bone150(mirrored)
+    100364: Bone151
+    100366: Bone151(mirrored)
+    100368: Bone152
+    100370: Bone152(mirrored)
+    100372: Bone154
+    100374: Bone154(mirrored)
+    100376: Bone155
+    100378: Bone155(mirrored)
+    100380: Bone156
+    100382: Bone156(mirrored)
+    100384: Bone158
+    100386: Bone159
+    100388: Bone160
+    100390: Bone161
+    100392: Bone162
+    100394: Bone164
+    100396: Bone166
+    100398: Dummy001
+    100400: Dummy003
+    400000: Bip001
+    400002: Bip001 Head
+    400004: Bip001 L Calf
+    400006: Bip001 L Clavicle
+    400008: Bip001 L Finger0
+    400010: Bip001 L Finger01
+    400012: Bip001 L Finger02
+    400014: Bip001 L Finger1
+    400016: Bip001 L Finger11
+    400018: Bip001 L Finger12
+    400020: Bip001 L Finger2
+    400022: Bip001 L Finger21
+    400024: Bip001 L Finger22
+    400026: Bip001 L Finger3
+    400028: Bip001 L Finger31
+    400030: Bip001 L Finger32
+    400032: Bip001 L Finger4
+    400034: Bip001 L Finger41
+    400036: Bip001 L Finger42
+    400038: Bip001 L Foot
+    400040: Bip001 L Forearm
+    400042: Bip001 L Hand
+    400044: Bip001 L Thigh
+    400046: Bip001 L Toe0
+    400048: Bip001 L UpperArm
+    400050: Bip001 Neck
+    400052: Bip001 Pelvis
+    400054: Bip001 R Calf
+    400056: Bip001 R Clavicle
+    400058: Bip001 R Finger0
+    400060: Bip001 R Finger01
+    400062: Bip001 R Finger02
+    400064: Bip001 R Finger1
+    400066: Bip001 R Finger11
+    400068: Bip001 R Finger12
+    400070: Bip001 R Finger2
+    400072: Bip001 R Finger21
+    400074: Bip001 R Finger22
+    400076: Bip001 R Finger3
+    400078: Bip001 R Finger31
+    400080: Bip001 R Finger32
+    400082: Bip001 R Finger4
+    400084: Bip001 R Finger41
+    400086: Bip001 R Finger42
+    400088: Bip001 R Foot
+    400090: Bip001 R Forearm
+    400092: Bip001 R Hand
+    400094: Bip001 R Thigh
+    400096: Bip001 R Toe0
+    400098: Bip001 R UpperArm
+    400100: Bip001 Spine
+    400102: Bip001 Spine1
+    400104: Bip001 Spine2
+    400106: Bone001
+    400108: Bone001(mirrored)
+    400110: Bone002
+    400112: Bone002(mirrored)
+    400114: eyeball
+    400116: eyebrow
+    400118: eyelash
+    400120: head
+    400122: //RootNode
+    400124: tongue
+    400126: tooth
+    400128: bone_bag_00
+    400130: bone_bag_01
+    400132: bone_bag_02
+    400134: bone_bag_03
+    400136: bone_bag_04
+    400138: Bone032
+    400140: Bone033
+    400142: Bone034
+    400144: Bone035
+    400146: Bone047
+    400148: Bone048
+    400150: Bone049
+    400152: Bone051
+    400154: Bone052
+    400156: Bone054
+    400158: Bone055
+    400160: Bone056
+    400162: Bone057
+    400164: Bone058
+    400166: Bone059
+    400168: Bone068
+    400170: Bone069
+    400172: Bone070
+    400174: Bone003
+    400176: Bone007
+    400178: Bone011
+    400180: Bone012
+    400182: Bone013
+    400184: Bone014
+    400186: Bone036
+    400188: Bone037
+    400190: Bone038
+    400192: Bone039
+    400194: Bone040
+    400196: Bone041
+    400198: Bone050
+    400200: Bone053
+    400202: Bone062
+    400204: Bone063
+    400206: Bone064
+    400208: Bone065
+    400210: Bone066
+    400212: Bone067
+    400214: Bone071
+    400216: Bone072
+    400218: Bone073
+    400220: Bone074
+    400222: Bone076
+    400224: Bone076(mirrored)
+    400226: Bone077
+    400228: Bone077(mirrored)
+    400230: Bone078
+    400232: Bone078(mirrored)
+    400234: Bone079
+    400236: Bone079(mirrored)
+    400238: Bone081
+    400240: Bone081(mirrored)
+    400242: Bone082
+    400244: Bone082(mirrored)
+    400246: Bone083
+    400248: Bone083(mirrored)
+    400250: Bone084
+    400252: Bone084(mirrored)
+    400254: Bone086
+    400256: Bone086(mirrored)
+    400258: Bone087
+    400260: Bone087(mirrored)
+    400262: Bone088
+    400264: Bone088(mirrored)
+    400266: Bone091
+    400268: Bone091(mirrored)
+    400270: Bone092
+    400272: Bone092(mirrored)
+    400274: Bone093
+    400276: Bone093(mirrored)
+    400278: Bone096
+    400280: Bone096(mirrored)
+    400282: Bone097
+    400284: Bone097(mirrored)
+    400286: Bone098
+    400288: Bone098(mirrored)
+    400290: Bone101
+    400292: Bone101(mirrored)
+    400294: Bone102
+    400296: Bone102(mirrored)
+    400298: Bone103
+    400300: Bone103(mirrored)
+    400302: Bone104
+    400304: Bone104(mirrored)
+    400306: Bone105
+    400308: Bone105(mirrored)
+    400310: Bone107
+    400312: Bone108
+    400314: Bone109
+    400316: Bone110
+    400318: Bone111
+    400320: Bone113
+    400322: Bone113(mirrored)
+    400324: Bone114
+    400326: Bone114(mirrored)
+    400328: Bone115
+    400330: Bone115(mirrored)
+    400332: Bone116
+    400334: Bone116(mirrored)
+    400336: Bone117
+    400338: Bone117(mirrored)
+    400340: Bone134
+    400342: Bone135
+    400344: Bone137
+    400346: Bone138
+    400348: Bone146
+    400350: Bone146(mirrored)
+    400352: Bone147
+    400354: Bone147(mirrored)
+    400356: Bone148
+    400358: Bone148(mirrored)
+    400360: Bone150
+    400362: Bone150(mirrored)
+    400364: Bone151
+    400366: Bone151(mirrored)
+    400368: Bone152
+    400370: Bone152(mirrored)
+    400372: Bone154
+    400374: Bone154(mirrored)
+    400376: Bone155
+    400378: Bone155(mirrored)
+    400380: Bone156
+    400382: Bone156(mirrored)
+    400384: Bone158
+    400386: Bone159
+    400388: Bone160
+    400390: Bone161
+    400392: Bone162
+    400394: Bone164
+    400396: Bone166
+    400398: Dummy001
+    400400: Dummy003
+    4300000: eyeball
+    4300002: eyelash
+    4300004: tooth
+    4300006: head
+    4300008: tongue
+    4300010: eyebrow
+    7400000: player@talk01_02
+    7400002: player@talk01_03
+    7400004: Take 001
+    7400006: player@talk01_01
+    9500000: //RootNode
+    13700000: eyeball
+    13700002: eyebrow
+    13700004: eyelash
+    13700006: head
+    13700008: tongue
+    13700010: tooth
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 1
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.001
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
