@@ -16,7 +16,7 @@ node tools/unity-export/cli.mjs --project <Unity 工程根目录> --spec export.
 ## 二、目录约定（`Assets/PlayableExport/`）
 | 目录 | 放什么 | 说明 |
 |---|---|---|
-| `Character/` | `rig.fbx` + 每个部件一个 prefab：`head.prefab` `body.prefab` `eye.prefab` `brow.prefab` `lash.prefab`…(文件名 = 部位) | 统一骨架 + 各部位蒙皮网格。head/body/eye/brow/lash 这五个部位会被“外观”换贴图 |
+| `Character/` | `rig.fbx` + 每个部件一个 prefab(或 `<部位>.fbx` + 同名 `.mat`)：`head.prefab` `body.prefab` `eye.prefab` `brow.prefab` `lash.prefab`…(文件名 = 部位) | 统一骨架 + 各部位蒙皮网格。head/body/eye/brow/lash 这五个部位会被“外观”换贴图 |
 | `Partner/` | 同上 | 男角色，只有一个 |
 | `Looks/<名称>/` | `head.png body.png eye.png brow.png lash.png` | 一种外观 = 一组贴图，和基础模型 UV 一致(同一模型换贴图) |
 | `Outfits/` `Hair/` `Shoes/` | 每件一个 prefab(蒙皮到统一骨架，材质带底色贴图)；同名 png/jpg 作为图标(可省，省了 Studio 自动渲染) | 一件有多个部件(如裙子 + 手套)放在同一个 prefab 里 |
@@ -37,3 +37,6 @@ Unity 材质 → glTF 材质：底色贴图(`_MainTex`)、颜色(`_Color`)、**�
 - prefab 套 prefab(Variant)暂不展开，请用普通 prefab。
 - TGA 只支持无压缩/RLE 的 24/32 位，建议直接用 PNG。
 - 骨骼名必须和统一骨架一致；导入时不一致会报错并列出缺的骨骼。
+
+## 六、当前资源的整理结果
+命名规则和旧名对照见 `docs/asset-naming.md`；依赖文件放在各目录的 `_src/` 子目录(以 `_` 开头的目录导出工具不扫描)。

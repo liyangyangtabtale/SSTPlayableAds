@@ -139,9 +139,11 @@ export async function writeZip(result, out) {
 export function discover(root = 'Assets/PlayableExport') {
   const base = path.join(path.dirname(ASSETS), root); if (!fs.existsSync(base)) throw new Error(`没有找到约定目录 ${root}，也没有指定 --spec export.json`);
   const ls = (d, re) => fs.existsSync(path.join(base, d)) ? fs.readdirSync(path.join(base, d)).filter(f => re.test(f)).map(f => path.join(root, d, f)) : [];
+  // 部位：有 <部位>.prefab 用 prefab；没有就用 <部位>.fbx + 同名 .mat(rig.fbx 不算部位)
+  const parts = d => [...ls(d, /\.prefab$/i).map(p => ({role: stem(p).toLowerCase(), prefab: p})), ...ls(d, /\.fbx$/i).filter(f => stem(f).toLowerCase() !== 'rig' && !ls(d, /\.prefab$/i).some(p => stem(p).toLowerCase() === stem(f).toLowerCase())).map(f => { const m = f.replace(/\.fbx$/i, '.mat'); return {role: stem(f).toLowerCase(), fbx: f, ...(fs.existsSync(path.join(path.dirname(ASSETS), m)) ? {material: m} : {})}; })];
   const spec = {};
-  const rigFbx = ls('Character', /^rig\.fbx$/i)[0]; if (rigFbx) spec.character = {rig: rigFbx, parts: ls('Character', /\.prefab$/i).map(p => ({role: stem(p).toLowerCase(), prefab: p}))};
-  const pRig = ls('Partner', /^rig\.fbx$/i)[0]; if (pRig) spec.partner = {rig: pRig, parts: ls('Partner', /\.prefab$/i).map(p => ({role: stem(p).toLowerCase(), prefab: p}))};
+  const rigFbx = ls('Character', /^rig\.fbx$/i)[0]; if (rigFbx) spec.character = {rig: rigFbx, parts: parts('Character')};
+  const pRig = ls('Partner', /^rig\.fbx$/i)[0]; if (pRig) spec.partner = {rig: pRig, parts: parts('Partner')};
   const lookDirs = fs.existsSync(path.join(base, 'Looks')) ? fs.readdirSync(path.join(base, 'Looks'), {withFileTypes: true}).filter(e => e.isDirectory()) : [];
   spec.looks = lookDirs.map(d => { const o = {name: d.name}; for (const f of fs.readdirSync(path.join(base, 'Looks', d.name))) { const m = f.match(/^(head|body|eye|brow|lash)\.(png|tga|jpg)$/i); if (m) o[m[1].toLowerCase()] = path.join(root, 'Looks', d.name, f); } return o; });
   const w = (d) => ls(d, /\.prefab$/i).map(p => { const ic = ['png', 'jpg'].map(e => p.replace(/\.prefab$/i, '.' + e)).find(f => fs.existsSync(path.join(path.dirname(ASSETS), f))); return {name: stem(p), prefab: p, ...(ic ? {icon: ic} : {})}; });
