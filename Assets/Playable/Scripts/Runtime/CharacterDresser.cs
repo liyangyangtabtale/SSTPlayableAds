@@ -33,6 +33,8 @@ namespace SSTPlayable
         readonly Dictionary<StageType, GameObject> equipped = new Dictionary<StageType, GameObject>();
         readonly List<Renderer> headRenderers = new List<Renderer>(), bodyRenderers = new List<Renderer>();
         Material headMat; // 头部材质实例：妆容通过它的 _FacePaintTex 切换
+        Material headSrc, bodySrc; // SetCharacter 设置的原始头/身体材质，用于 SetSkinOverride 切回
+        Texture facePaint;         // 当前妆容贴图，换头部材质时带过去
 
         public void Build()
         {
@@ -132,12 +134,27 @@ namespace SSTPlayable
         public void SetCharacter(CharacterVariant v)
         {
             if (v == null) return;
-            if (v.headMaterial != null)
+            headSrc = v.headMaterial; bodySrc = v.bodyMaterial;
+            ApplySkin(headSrc, bodySrc);
+        }
+
+        /// <summary>调试：把头/身体换成指定材质(传 null 恢复 SetCharacter 的原始材质)；当前妆容会带到新的头部材质上。</summary>
+        public void SetSkinOverride(Material head, Material body)
+        {
+            ApplySkin(head != null ? head : headSrc, body != null ? body : bodySrc);
+        }
+
+        void ApplySkin(Material head, Material body)
+        {
+            if (head != null)
             {
-                headMat = new Material(v.headMaterial); // 实例化，不污染共享材质
+                var old = headMat;
+                headMat = new Material(head); // 实例化，不污染共享材质
+                if (facePaint != null && headMat.HasProperty("_FacePaintTex")) headMat.SetTexture("_FacePaintTex", facePaint);
                 foreach (var r in headRenderers) SetAll(r, headMat);
+                if (old != null) Destroy(old);
             }
-            if (v.bodyMaterial != null) foreach (var r in bodyRenderers) SetAll(r, v.bodyMaterial);
+            if (body != null) foreach (var r in bodyRenderers) SetAll(r, body);
         }
 
         static void SetAll(Renderer r, Material m)
@@ -159,6 +176,7 @@ namespace SSTPlayable
             if (slot == StageType.Makeup)
             {
                 // 妆容：直接换头部材质的 _FacePaintTex（头部 UV 布局的 RGBA 贴图）
+                if (opt.makeupTexture != null) facePaint = opt.makeupTexture;
                 if (headMat != null && opt.makeupTexture != null) headMat.SetTexture("_FacePaintTex", opt.makeupTexture);
                 return;
             }

@@ -50,7 +50,7 @@ namespace SSTPlayable.Editor
             shadow.GetComponent<MeshRenderer>().sharedMaterial = sm;
 
             // 角色
-            var charGo = new GameObject("Character", typeof(CharacterDresser), typeof(CharacterAnimator));
+            var charGo = new GameObject("Character", typeof(CharacterDresser), typeof(CharacterAnimator), typeof(CharacterDragRotate));
             var dresser = charGo.GetComponent<CharacterDresser>();
             dresser.rigPrefab = AssetFinder.Load<GameObject>("player", ".fbx");
             dresser.baseParts.Add(Part("head", "head", head: true));
@@ -58,6 +58,9 @@ namespace SSTPlayable.Editor
             dresser.baseParts.Add(Part("eyeball", "eyeball"));
             dresser.baseParts.Add(Part("eyelash", "eyelash", tex: "eyelash"));
             dresser.baseParts.Add(Part("eyebrow", "eyebrow"));
+            var skinDebug = charGo.AddComponent<SkinMaterialDebug>(); skinDebug.dresser = dresser;
+            skinDebug.skinHead = AssetDatabase.LoadAssetAtPath<Material>("Assets/PlayableSkin/Skin_head.mat");
+            skinDebug.skinBody = AssetDatabase.LoadAssetAtPath<Material>("Assets/PlayableSkin/Skin_body.mat");
 
             var uiGo = (GameObject)PrefabUtility.InstantiatePrefab(uiPrefab);
             var ui = uiGo.GetComponent<GameUI>(); ui.background = bg;

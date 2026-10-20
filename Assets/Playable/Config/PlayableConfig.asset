@@ -17,8 +17,7 @@ MonoBehaviour:
     bgTop: {r: 0.96, g: 0.85, b: 0.9, a: 1}
     bgBottom: {r: 0.91, g: 0.71, b: 0.82, a: 1}
     backgroundImage: {fileID: 21300000, guid: 8c122dac6bbb948bf86ce40a9294e267, type: 3}
-    endBackgroundImage: {fileID: 21300000, guid: f7c74dd4c6b1b44ba8452fabce1741bb,
-      type: 3}
+    endBackgroundImage: {fileID: 21300000, guid: f7c74dd4c6b1b44ba8452fabce1741bb, type: 3}
     title: MEET MY CRUSH
     introSender: My Crush
     introMessage: Tonight? Let's go out!
@@ -43,8 +42,7 @@ MonoBehaviour:
     - id: party_dress_086
       good: 0
       icon: {fileID: 0}
-      prefab: {fileID: 7233572184737766679, guid: 5036ac786f41e41adbc56dd5e8891202,
-        type: 3}
+      prefab: {fileID: 7233572184737766679, guid: 5036ac786f41e41adbc56dd5e8891202, type: 3}
       material: {fileID: 0}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 0}
@@ -52,8 +50,7 @@ MonoBehaviour:
     - id: party_dress_090
       good: 0
       icon: {fileID: 0}
-      prefab: {fileID: 2015120614454475247, guid: 1864dc6df85e440f381d5936256ab976,
-        type: 3}
+      prefab: {fileID: 2015120614454475247, guid: 1864dc6df85e440f381d5936256ab976, type: 3}
       material: {fileID: 0}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 0}
@@ -63,8 +60,7 @@ MonoBehaviour:
       id: hair_007
       good: 0
       icon: {fileID: 0}
-      prefab: {fileID: 132476669660314642, guid: 5b18fe2649fce417aa2299ed64a42fea,
-        type: 3}
+      prefab: {fileID: 132476669660314642, guid: 5b18fe2649fce417aa2299ed64a42fea, type: 3}
       material: {fileID: 2100000, guid: d413a05e6d85047a59f56533e3122c2e, type: 2}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 2800000, guid: 68b672a4a2b474872a695dc82194fe3e, type: 3}
@@ -117,8 +113,7 @@ MonoBehaviour:
     - boy_eyelash
     - boy_head
     idleAnim:
-      clip: {fileID: 1827226128182048838, guid: 61484338eece94030bbd06120ca75c71,
-        type: 3}
+      clip: {fileID: 1827226128182048838, guid: 61484338eece94030bbd06120ca75c71, type: 3}
       webName: boy
       maxDuration: 0
     walkAnim:
@@ -126,13 +121,11 @@ MonoBehaviour:
       webName: walk
       maxDuration: 0
     goodAnim:
-      clip: {fileID: 1827226128182048838, guid: 3e053fddf1b1f4029ad9ea8add0ec189,
-        type: 3}
+      clip: {fileID: 1827226128182048838, guid: 3e053fddf1b1f4029ad9ea8add0ec189, type: 3}
       webName: win
       maxDuration: 0
     badAnim:
-      clip: {fileID: 1827226128182048838, guid: 8b094d238e8394317b27455b87df424b,
-        type: 3}
+      clip: {fileID: 1827226128182048838, guid: 8b094d238e8394317b27455b87df424b, type: 3}
       webName: lose
       maxDuration: 0
     startPos: {x: -3.4, y: 0, z: 0}
@@ -204,8 +197,7 @@ MonoBehaviour:
     - id: casual_dress_010
       good: 0
       icon: {fileID: 2800000, guid: 25af08873734a4058abc39ede8beeb0d, type: 3}
-      prefab: {fileID: 8205242524992918395, guid: 6dee5f795aef24af1882bbcf1cd4c756,
-        type: 3}
+      prefab: {fileID: 8205242524992918395, guid: 6dee5f795aef24af1882bbcf1cd4c756, type: 3}
       material: {fileID: 0}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 0}
@@ -213,8 +205,7 @@ MonoBehaviour:
     - id: designer_dress_134
       good: 1
       icon: {fileID: 2800000, guid: 22aaf194cea984673801c7c9becc78e6, type: 3}
-      prefab: {fileID: 4237656006348532012, guid: 5a082f0423d964feba6a2a6b915f980d,
-        type: 3}
+      prefab: {fileID: 4237656006348532012, guid: 5a082f0423d964feba6a2a6b915f980d, type: 3}
       material: {fileID: 0}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 0}
@@ -222,8 +213,7 @@ MonoBehaviour:
     - id: designer_dress_417
       good: 1
       icon: {fileID: 2800000, guid: 34ef517475c0b40ddaa274fa68a0c3d3, type: 3}
-      prefab: {fileID: 2649977354167951945, guid: 5de6c2213bc104840b15def784ec8fe8,
-        type: 3}
+      prefab: {fileID: 2649977354167951945, guid: 5de6c2213bc104840b15def784ec8fe8, type: 3}
       material: {fileID: 0}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 0}
@@ -231,8 +221,7 @@ MonoBehaviour:
     - id: designer_dress_424
       good: 0
       icon: {fileID: 2800000, guid: 20da3659753a84c609285b2b57af7429, type: 3}
-      prefab: {fileID: 6107226324061688487, guid: 42de45067b835470798b61350b428115,
-        type: 3}
+      prefab: {fileID: 6107226324061688487, guid: 42de45067b835470798b61350b428115, type: 3}
       material: {fileID: 2100000, guid: 68befcf15669e4d3eaa461168cc96645, type: 2}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 0}
@@ -240,8 +229,7 @@ MonoBehaviour:
     - id: romantic_dress_021
       good: 1
       icon: {fileID: 2800000, guid: 2f047da00cd20413896d7da9680b8aea, type: 3}
-      prefab: {fileID: 830301686540084499, guid: c3634c363065b49bab499b72b9029ee3,
-        type: 3}
+      prefab: {fileID: 830301686540084499, guid: c3634c363065b49bab499b72b9029ee3, type: 3}
       material: {fileID: 0}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 0}
@@ -249,8 +237,7 @@ MonoBehaviour:
     - id: party_dress_179
       good: 1
       icon: {fileID: 2800000, guid: 328cf43803a8444b09e97fead51c6e30, type: 3}
-      prefab: {fileID: 184223362560026716, guid: afeb844428d6942bdb611a74a4d1a84c,
-        type: 3}
+      prefab: {fileID: 184223362560026716, guid: afeb844428d6942bdb611a74a4d1a84c, type: 3}
       material: {fileID: 2100000, guid: 1a00b5958066e4a248120886f611edee, type: 2}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 0}
@@ -263,52 +250,68 @@ MonoBehaviour:
     count: 6
     shotId: full
     options:
-    - id: facepaint_001
+    - id: makeup_01
       good: 1
-      icon: {fileID: 2800000, guid: fb61b9371fbc34abcba5334971c12742, type: 3}
+      icon: {fileID: 2800000, guid: 36694362072e2204494825bf071d638e, type: 3}
       prefab: {fileID: 0}
       material: {fileID: 0}
-      makeupTexture: {fileID: 2800000, guid: 36d196904228449b1b27cf81d90ec9fd, type: 3}
+      makeupTexture: {fileID: 2800000, guid: 36694362072e2204494825bf071d638e, type: 3}
       mainTexture: {fileID: 0}
       tint: {r: 1, g: 1, b: 1, a: 0}
-    - id: facepaint_002
+    - id: makeup_02
       good: 1
-      icon: {fileID: 2800000, guid: 82094937d56604eba8179419dcb85f19, type: 3}
+      icon: {fileID: 2800000, guid: 2ba6ddd9ea7fa5149a81b548703728eb, type: 3}
       prefab: {fileID: 0}
       material: {fileID: 0}
-      makeupTexture: {fileID: 2800000, guid: a32444aad04824fc9b5c595e47506231, type: 3}
+      makeupTexture: {fileID: 2800000, guid: 2ba6ddd9ea7fa5149a81b548703728eb, type: 3}
       mainTexture: {fileID: 0}
       tint: {r: 1, g: 1, b: 1, a: 0}
-    - id: facepaint_003
+    - id: makeup_03
       good: 1
-      icon: {fileID: 2800000, guid: 98a2abb4748dc4b6a83df335ffc684a4, type: 3}
+      icon: {fileID: 2800000, guid: 6192d0dfdebabe648bb79468e97027a0, type: 3}
       prefab: {fileID: 0}
       material: {fileID: 0}
-      makeupTexture: {fileID: 2800000, guid: 1307192be2c304e04a7753c4d7106934, type: 3}
+      makeupTexture: {fileID: 2800000, guid: 6192d0dfdebabe648bb79468e97027a0, type: 3}
       mainTexture: {fileID: 0}
       tint: {r: 1, g: 1, b: 1, a: 0}
-    - id: facepaint_004
+    - id: makeup_04
       good: 0
-      icon: {fileID: 2800000, guid: 4a53efd8453424027b7e7e563daa5d7e, type: 3}
+      icon: {fileID: 2800000, guid: 07e5ce70d86609c4baa8a83b503406e0, type: 3}
       prefab: {fileID: 0}
       material: {fileID: 0}
-      makeupTexture: {fileID: 2800000, guid: c248fe53be4b34500a47bbaab502c4ff, type: 3}
+      makeupTexture: {fileID: 2800000, guid: 07e5ce70d86609c4baa8a83b503406e0, type: 3}
       mainTexture: {fileID: 0}
       tint: {r: 1, g: 1, b: 1, a: 0}
-    - id: facepaint_005
+    - id: makeup_05
       good: 0
-      icon: {fileID: 2800000, guid: a27272edf52284aab8b01c66cda2aefc, type: 3}
+      icon: {fileID: 2800000, guid: ca388b084700d6a48bd3767f0d64a9b7, type: 3}
       prefab: {fileID: 0}
       material: {fileID: 0}
-      makeupTexture: {fileID: 2800000, guid: 32735e10aafaf4f2f96849c257fe6072, type: 3}
+      makeupTexture: {fileID: 2800000, guid: ca388b084700d6a48bd3767f0d64a9b7, type: 3}
       mainTexture: {fileID: 0}
       tint: {r: 1, g: 1, b: 1, a: 0}
-    - id: facepaint_006
+    - id: makeup_06
       good: 0
-      icon: {fileID: 2800000, guid: 6f7e701bea571497493c2ca8cefd7244, type: 3}
+      icon: {fileID: 2800000, guid: 8f5ef9537d7f2e143a5eb89cd08ba7de, type: 3}
       prefab: {fileID: 0}
       material: {fileID: 0}
-      makeupTexture: {fileID: 2800000, guid: 6f999d6a284694554bde05852a4df2fa, type: 3}
+      makeupTexture: {fileID: 2800000, guid: 8f5ef9537d7f2e143a5eb89cd08ba7de, type: 3}
+      mainTexture: {fileID: 0}
+      tint: {r: 1, g: 1, b: 1, a: 0}
+    - id: makeup_07
+      good: 1
+      icon: {fileID: 2800000, guid: 76ee6fe5059e22e40a1281fabbc153b1, type: 3}
+      prefab: {fileID: 0}
+      material: {fileID: 0}
+      makeupTexture: {fileID: 2800000, guid: 76ee6fe5059e22e40a1281fabbc153b1, type: 3}
+      mainTexture: {fileID: 0}
+      tint: {r: 1, g: 1, b: 1, a: 0}
+    - id: makeup_08
+      good: 0
+      icon: {fileID: 2800000, guid: ecda83bf04d39f94c9e8aad4764514d4, type: 3}
+      prefab: {fileID: 0}
+      material: {fileID: 0}
+      makeupTexture: {fileID: 2800000, guid: ecda83bf04d39f94c9e8aad4764514d4, type: 3}
       mainTexture: {fileID: 0}
       tint: {r: 1, g: 1, b: 1, a: 0}
   - type: 2
@@ -322,8 +325,7 @@ MonoBehaviour:
     - id: hair_001
       good: 0
       icon: {fileID: 2800000, guid: a6d6180a96f724dd19bb9f384dd8d390, type: 3}
-      prefab: {fileID: 6816732756216543999, guid: cf6b0d346e2a646cda142a92ff820570,
-        type: 3}
+      prefab: {fileID: 6816732756216543999, guid: cf6b0d346e2a646cda142a92ff820570, type: 3}
       material: {fileID: 2100000, guid: 03ae69a0bc6fc4cd6a019c76e969e661, type: 2}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 2800000, guid: b78194d18c7a44ea2b356881a9d4479d, type: 3}
@@ -331,8 +333,7 @@ MonoBehaviour:
     - id: hair_002
       good: 0
       icon: {fileID: 2800000, guid: 6bb8d60b0f60f48559039ca8fdcbf20c, type: 3}
-      prefab: {fileID: 987320012994519579, guid: ce03291c66dff401daa28bba48340088,
-        type: 3}
+      prefab: {fileID: 987320012994519579, guid: ce03291c66dff401daa28bba48340088, type: 3}
       material: {fileID: 2100000, guid: d28db2686c45948acbe0c798133634c7, type: 2}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 2800000, guid: 2b7ccbe81b50740998b0a3db2ba3ccb7, type: 3}
@@ -340,8 +341,7 @@ MonoBehaviour:
     - id: hair_003
       good: 1
       icon: {fileID: 2800000, guid: bdddb9cac9257453ba22283ef08dd1d0, type: 3}
-      prefab: {fileID: 7894301846326604752, guid: 15738c4cc35084f5eb58bc87704e2634,
-        type: 3}
+      prefab: {fileID: 7894301846326604752, guid: 15738c4cc35084f5eb58bc87704e2634, type: 3}
       material: {fileID: 2100000, guid: 24bf4f979c2f342489bc26bd111c7eea, type: 2}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 2800000, guid: 140c52b672a3c48848c6c39bfb4642ae, type: 3}
@@ -349,8 +349,7 @@ MonoBehaviour:
     - id: hair_004
       good: 1
       icon: {fileID: 2800000, guid: 808119881235d4eb5991a5499ef47fd8, type: 3}
-      prefab: {fileID: 5744189633598452830, guid: b5356c0b2085c42c9a63a8f0c6e04db6,
-        type: 3}
+      prefab: {fileID: 5744189633598452830, guid: b5356c0b2085c42c9a63a8f0c6e04db6, type: 3}
       material: {fileID: 2100000, guid: 49ad5ba22b8424fd9a157f4010766700, type: 2}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 2800000, guid: ee7eeb248a9e744c1874e8ecc11b7f6c, type: 3}
@@ -358,8 +357,7 @@ MonoBehaviour:
     - id: hair_005
       good: 0
       icon: {fileID: 2800000, guid: ad2a8738d3f1143e68451a93b74520e4, type: 3}
-      prefab: {fileID: 3189895618570319132, guid: fdac3b93beac247b38f2d1587f924f9b,
-        type: 3}
+      prefab: {fileID: 3189895618570319132, guid: fdac3b93beac247b38f2d1587f924f9b, type: 3}
       material: {fileID: 2100000, guid: 08077f9a226024954b07730ea6b43ac2, type: 2}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 2800000, guid: 0fe7b6e4fc0f1454781f18c70d8a2340, type: 3}
@@ -367,8 +365,7 @@ MonoBehaviour:
     - id: hair_006
       good: 1
       icon: {fileID: 2800000, guid: 491610bf3c30b48f7a1c20fa1ddc3a5f, type: 3}
-      prefab: {fileID: 3546646727534743493, guid: de23ff4c2785d4a79b8fa873ef89c818,
-        type: 3}
+      prefab: {fileID: 3546646727534743493, guid: de23ff4c2785d4a79b8fa873ef89c818, type: 3}
       material: {fileID: 2100000, guid: 317d8f791581f49658636993bc7c4ed8, type: 2}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 2800000, guid: c2529f139f8cd4f2b95d6503c24f084f, type: 3}
@@ -376,8 +373,7 @@ MonoBehaviour:
     - id: hair_007
       good: 1
       icon: {fileID: 2800000, guid: a959a4f25179642d7bcf5c606043527b, type: 3}
-      prefab: {fileID: 132476669660314642, guid: 5b18fe2649fce417aa2299ed64a42fea,
-        type: 3}
+      prefab: {fileID: 132476669660314642, guid: 5b18fe2649fce417aa2299ed64a42fea, type: 3}
       material: {fileID: 2100000, guid: d413a05e6d85047a59f56533e3122c2e, type: 2}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 2800000, guid: 68b672a4a2b474872a695dc82194fe3e, type: 3}
@@ -393,8 +389,7 @@ MonoBehaviour:
     - id: casual_shoes_004
       good: 1
       icon: {fileID: 2800000, guid: 367b93fafc5c74b9e9bb257a0fa4084f, type: 3}
-      prefab: {fileID: 1543436164435337908, guid: e866339f9a0b343299aa3448b361160f,
-        type: 3}
+      prefab: {fileID: 1543436164435337908, guid: e866339f9a0b343299aa3448b361160f, type: 3}
       material: {fileID: 2100000, guid: cece220a1364f48659e7038ed6d2d7dc, type: 2}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 0}
@@ -402,8 +397,7 @@ MonoBehaviour:
     - id: casual_shoes_020
       good: 1
       icon: {fileID: 2800000, guid: 0eb38ec99cda9468685892aef1ca599e, type: 3}
-      prefab: {fileID: 3594677233991045595, guid: 3c2938574d3104a0996413b27e9fd660,
-        type: 3}
+      prefab: {fileID: 3594677233991045595, guid: 3c2938574d3104a0996413b27e9fd660, type: 3}
       material: {fileID: 2100000, guid: f6dc0fa3b1d3e4249b7e2a9a49454da8, type: 2}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 0}
@@ -411,8 +405,7 @@ MonoBehaviour:
     - id: designer_shoes_230
       good: 1
       icon: {fileID: 2800000, guid: ea274984c20344f9d95298bc488dcab9, type: 3}
-      prefab: {fileID: 6201192234111179017, guid: b24e9a21b168e41b8a4b294a660dc409,
-        type: 3}
+      prefab: {fileID: 6201192234111179017, guid: b24e9a21b168e41b8a4b294a660dc409, type: 3}
       material: {fileID: 2100000, guid: 4a95bd1f36671468b9372162fb0db9a0, type: 2}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 0}
@@ -420,8 +413,7 @@ MonoBehaviour:
     - id: designer_shoes_274
       good: 0
       icon: {fileID: 2800000, guid: 4211753af8cda488da6a74f655c47527, type: 3}
-      prefab: {fileID: 3253090964112285735, guid: a116d8470945f444baaacd9f9eff3caf,
-        type: 3}
+      prefab: {fileID: 3253090964112285735, guid: a116d8470945f444baaacd9f9eff3caf, type: 3}
       material: {fileID: 2100000, guid: 0d4883eb673854e399eed2d8b0adceb3, type: 2}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 0}
@@ -429,8 +421,7 @@ MonoBehaviour:
     - id: designer_shoes_476
       good: 0
       icon: {fileID: 2800000, guid: fbb543127d5e141039ef867b8232c56e, type: 3}
-      prefab: {fileID: 1540793246945957034, guid: 9158aa97841254a48a66b85813706a02,
-        type: 3}
+      prefab: {fileID: 1540793246945957034, guid: 9158aa97841254a48a66b85813706a02, type: 3}
       material: {fileID: 2100000, guid: 99270f04fbe4a4420ab0dc3cb38da860, type: 2}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 0}
@@ -438,8 +429,7 @@ MonoBehaviour:
     - id: glam_shoes_021
       good: 1
       icon: {fileID: 2800000, guid: 3ae9cbd0e1da64ebaabcc176128a2e42, type: 3}
-      prefab: {fileID: 9155993784313326383, guid: ff828b2d1fd594d3aa8cc810b71a85ae,
-        type: 3}
+      prefab: {fileID: 9155993784313326383, guid: ff828b2d1fd594d3aa8cc810b71a85ae, type: 3}
       material: {fileID: 2100000, guid: 72e37e9b68bc343dcbe36388579e40ac, type: 2}
       makeupTexture: {fileID: 0}
       mainTexture: {fileID: 0}

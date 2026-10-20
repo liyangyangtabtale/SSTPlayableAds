@@ -14,6 +14,7 @@ namespace SSTPlayable
         public GameUI ui;
 
         CharacterDresser partner; CharacterAnimator partnerAnimator;
+        CharacterDragRotate dragRotate;
         Vector3 girlHome; Transform girlShadow; bool endingStarted;
 
         List<StageConfig> stages;
@@ -25,6 +26,7 @@ namespace SSTPlayable
         {
             girlHome = dresser.transform.position;
             var sh = GameObject.Find("FootShadow"); if (sh != null) girlShadow = sh.transform;
+            dragRotate = dresser.GetComponent<CharacterDragRotate>();
             dresser.Build();
             dresser.SetCharacter(config.characters.Count > 0 ? config.characters[Mathf.Clamp(config.characterIndex, 0, config.characters.Count - 1)] : null);
             characterAnimator.Init(dresser.Animator);
@@ -93,6 +95,7 @@ namespace SSTPlayable
             ui.SetTitle(config.theme.title);
             // 换装阶段相机不切换：所有阶段共用同一个镜头(默认 full)，不同阶段想切再在 StageConfig.shotId 里改
             cameraRig.Set(config.GetShot(s.shotId));
+            if (dragRotate != null) dragRotate.interactable = true; // 换装阶段可左右拖动旋转角色
             ui.stage.Show(stages, i, config.theme.confirmText, OnPick, OnConfirm);
         }
 
@@ -136,6 +139,7 @@ namespace SSTPlayable
         {
             float score = pickCount == 0 ? 0 : (float)goodCount / pickCount;
             bool good = score >= config.goodThreshold;
+            if (dragRotate != null) dragRotate.interactable = false; // 结局里 SetGirl 会重设朝向
             Debug.Log($"[Playable] ending good={good} score={score:0.00}");
             StartCoroutine(EndingSequence(good));
         }
