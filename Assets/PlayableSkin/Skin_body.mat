@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: ca67d2ef0d473c341836f5430195b3db, type: 3}
+        m_Texture: {fileID: 2800000, guid: 02df89acf179e4948a7a0b52a7a56056, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
@@ -37,7 +37,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _SpecPower: 19.5
+    - _SpecPower: 30
     - _Wrap: 1
     m_Colors:
     - _AmbientColor: {r: 1, g: 1, b: 1, a: 1}
@@ -46,7 +46,7 @@ Material:
     - _DarkTint: {r: 1, g: 0.8537736, b: 0.8537736, a: 1}
     - _ReviseColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
     - _ShadowTint: {r: 1, g: 0.58604705, b: 0.518, a: 1}
-    - _SkinSpecColor: {r: 0.1, g: 0.086666666, b: 0.086666666, a: 1}
+    - _SkinSpecColor: {r: 1, g: 0.8901961, b: 0.8901961, a: 1}
     - _SpecColor: {r: 1, g: 0.92, b: 0.86, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

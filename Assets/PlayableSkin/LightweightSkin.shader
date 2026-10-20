@@ -2,10 +2,9 @@ Shader "Playable/Lightweight Skin"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
+        _MainTex ("Base Texture (RGB=Color A=Spec)", 2D) = "white" {}
         _Color ("Main Color", Color) = (1,1,1,1)
         _FacePaintTex ("FacePaintTexture", 2D) = "black" {}
-        [HideInInspector] _ReviseColor ("revise", Color) = (0.6,0.6,0.6,1)
         _Wrap ("Wrap (0 = Lambert)", Range(0,1)) = 0.3
         _ShadowTint ("Diffuse Terminator Tint", Color) = (1,0.8,0.75,1)
         _BrightTint ("Bright Diffuse Color", Color) = (1,1,1,1)
@@ -13,7 +12,6 @@ Shader "Playable/Lightweight Skin"
         _AmbientColor ("Ambient / Light Probe Color", Color) = (1,1,1,1)
         _SkinSpecColor ("Specular Color", Color) = (0.12,0.1104,0.1032,1)
         _SpecPower ("Specular Power (lower = softer)", Range(4,64)) = 20
-        [NoScaleOffset] _MaskTex ("Mask R=Spec B=AO", 2D) = "white" {}
     }
     SubShader
     {
@@ -35,9 +33,9 @@ Shader "Playable/Lightweight Skin"
             #include "Lighting.cginc"
             #include "AutoLight.cginc"
 
-            sampler2D _MainTex, _FacePaintTex, _MaskTex;
+            sampler2D _MainTex, _FacePaintTex;
             float4 _MainTex_ST, _FacePaintTex_ST;
-            half4 _Color, _ReviseColor, _ShadowTint, _SkinSpecColor;
+            half4 _Color, _ShadowTint, _SkinSpecColor;
             half4 _BrightTint, _DarkTint, _AmbientColor;
             half _Wrap, _SpecPower;
 
@@ -72,11 +70,11 @@ Shader "Playable/Lightweight Skin"
             }
             half4 frag(v2f i) : SV_Target
             {
-                half3 albedo = tex2D(_MainTex, i.uv.xy).rgb * _Color.rgb;
+                half4 baseTexture = tex2D(_MainTex, i.uv.xy);
+                half3 albedo = baseTexture.rgb * _Color.rgb;
                 half4 facePaint = tex2D(_FacePaintTex, i.uv.zw);
-                // Match Coco/RimWrap/Basic(lipgloss): tint base first, then alpha-blend paint.
-                albedo = lerp(albedo, facePaint.rgb * _ReviseColor.rgb, facePaint.a);
-                half3 mask = tex2D(_MaskTex, i.uv.xy).rgb;
+                // Paint alpha controls coverage; full alpha replaces the base color.
+                albedo = lerp(albedo, facePaint.rgb, facePaint.a);
                 half3 n = normalize(i.worldNormal);
                 // float normalization avoids half-precision overflow for large scenes.
                 half3 l = normalize(UnityWorldSpaceLightDir(i.worldPos));
@@ -90,16 +88,16 @@ Shader "Playable/Lightweight Skin"
                 half3 mainLight = _LightColor0.rgb * atten;
                 // The dark color is an artistic fill target, independent of light intensity.
                 // This allows ordinary 0..1 colors to brighten an otherwise unlit back side.
-                half3 litColor = albedo * (i.ambient * _AmbientColor.rgb * mask.b
+                half3 litColor = albedo * (i.ambient * _AmbientColor.rgb
                     + diffuse * mainLight);
-                half3 darkColor = albedo * _DarkTint.rgb * mask.b;
+                half3 darkColor = albedo * _DarkTint.rgb;
                 half3 color = lerp(darkColor, litColor * _BrightTint.rgb, brightWeight);
                 float3 v = normalize(lerp(UnityWorldSpaceViewDir(i.worldPos),
                     UNITY_MATRIX_V[2].xyz, unity_OrthoParams.w));
                 float3 sumLV = (float3)l + v;
                 half3 h = sumLV * rsqrt(max(dot(sumLV,sumLV), 1e-6));
                 half spec = pow(saturate(dot(n,h)), max(_SpecPower,4.0h));
-                spec *= saturate(ndl * 4.0h) * mask.r;
+                spec *= saturate(ndl * 4.0h) * baseTexture.a;
                 color += _SkinSpecColor.rgb * spec * mainLight;
                 half4 outputColor = half4(color,1);
                 UNITY_APPLY_FOG(i.fogCoord, outputColor);
