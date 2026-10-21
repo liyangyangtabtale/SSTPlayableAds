@@ -771,7 +771,7 @@ GameObject:
   - component: {fileID: 3546646727534908327}
   - component: {fileID: 3546646727527496829}
   m_Layer: 0
-  m_Name: hair_06
+  m_Name: hair_006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -823,7 +823,7 @@ GameObject:
   - component: {fileID: 3546646727534908325}
   - component: {fileID: 3546646727531561661}
   m_Layer: 0
-  m_Name: hair_06
+  m_Name: hair_006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,6 +1,6 @@
 // 左侧各配置面板。每个面板函数返回一个可折叠的 details；改动通过 app.set(path, value) 写回配置，预览自动刷新。
 import {h, modal, toast, fields, fmtBytes} from './ui.js';
-import {STAGE_LABELS, BANNER_STYLES, FONTS, SOUND_EVENTS, ANIM_EVENTS, CHANNELS, validateConfig, usedAssetIds} from '../shared/schema.js';
+import {STAGE_LABELS, BANNER_STYLES, FONTS, SOUND_EVENTS, CHANNELS, validateConfig, usedAssetIds} from '../shared/schema.js';
 import {sizeReport, exportForChannel, makePlayable} from './build.js';
 
 export function themePanel(app) {
@@ -78,23 +78,23 @@ export function lightPanel(app) {
   const F = fields(app);
   return F.section('阴影 / 相机 / 旋转', false,
     h('b', {}, '地面阴影'), F.check('lighting.shadow.enabled', '显示', ''), F.range('lighting.shadow.opacity', '浓淡', {min: 0, max: 1, step: 0.05}), F.range('lighting.shadow.size', '大小', {min: 0.3, max: 2, step: 0.05}), F.range('lighting.shadow.offsetX', '左右位置', {min: -0.5, max: 0.5, step: 0.01}),
-    h('b', {}, '相机'), F.range('camera.fov', '视角', {min: 15, max: 60, step: 1}), F.range('camera.distance', '距离(换装)', {min: 2, max: 8, step: 0.05}), F.range('camera.height', '高度(换装)', {min: 0, max: 2.5, step: 0.02}), F.range('camera.shiftX', '横向偏移(换装)', {min: -1, max: 1, step: 0.01}),
-    F.range('camera.outroDistance', '距离(结局)', {min: 2, max: 10, step: 0.05}), F.range('camera.outroHeight', '高度(结局)', {min: 0, max: 2.5, step: 0.02}), F.range('camera.outroShiftX', '横向偏移(结局)', {min: -1, max: 1, step: 0.01}),
+    h('b', {}, '相机'), F.range('camera.fov', '视角', {min: 15, max: 60, step: 1}), F.range('camera.distance', '距离(换装)', {min: 2, max: 8, step: 0.05}), F.range('camera.height', '高度(换装)', {min: 0, max: 2.5, step: 0.02}), F.range('camera.pitch', '俯仰角(换装)', {min: -30, max: 45, step: 1}), F.range('camera.shiftX', '横向偏移(换装)', {min: -1, max: 1, step: 0.01}),
+    F.range('camera.outroDistance', '距离(结局)', {min: 2, max: 10, step: 0.05}), F.range('camera.outroHeight', '高度(结局)', {min: 0, max: 2.5, step: 0.02}), F.range('camera.outroPitch', '俯仰角(结局)', {min: -30, max: 45, step: 1}), F.range('camera.outroShiftX', '横向偏移(结局)', {min: -1, max: 1, step: 0.01}),
     h('b', {}, '3D 旋转'), F.check('rotation.enabled', '拖拽旋转', '换装阶段可拖拽转 360°'), F.range('rotation.inertia', '惯性', {min: 0.7, max: 0.99, step: 0.01}), F.check('rotation.nudge', '提示转动', '首次选衣后自动左右小转'),
     F.check('rotation.hint.enabled', '旋转提示图标', '显示'), F.select('rotation.hint.style', '提示样式', [['icon', '只用图标'], ['icon+text', '图标 + 文字']]));
 }
 
-export function animPanel(app) {
-  const F = fields(app), lib = app.lib, A = app.cfg.animations;
-  const evCard = ([ev, label]) => {
-    const list = A[ev] || (A[ev] = []); const opts = lib.all('anim').filter(a => (a.meta.kind || 'body') !== 'phone' && !list.includes(a.id));
-    return h('div', {class: 'evt'}, h('div', {class: 'eh'}, h('b', {}, label), list.length > 1 ? h('span', {class: 'mut'}, ' · 动作组：随机挑，不连续重复') : null),
-      ...list.map((id, i) => { const a = lib.get(id); return h('div', {class: 'item'}, h('div', {class: 'nm'}, a ? `${a.name}（${a.meta.duration}s${a.meta.face ? ' · 含表情' : ''}）` : id + '(缺失)'), h('button', {class: 'sm', onclick: () => { list.splice(i, 1); app.changed(true); }}, '✕')); }),
-      h('select', {onchange: e => { if (e.target.value) { list.push(e.target.value); app.changed(true); } }}, h('option', {value: ''}, '＋ 添加动画…'), opts.map(a => h('option', {value: a.id}, `${a.name}（${a.meta.duration}s）`))));
-  };
-  const phoneAnims = a => (a.meta.kind || 'body') === 'phone';
-  return F.section('动画 / 手机', false, h('div', {class: 'mut'}, '每个事件是一个“动作组”：放一个就固定播它，放多个就随机挑。新动画上传到资源库后在这里加入。'), ...ANIM_EVENTS.map(evCard),
-    h('b', {}, '开场手机'), F.asset('phone.model', '手机模型', 'phone'), F.asset('phone.take', '拿起动画', 'anim', {filter: phoneAnims}), F.asset('phone.end', '放下动画', 'anim', {filter: phoneAnims}));
+/** 女主角头/身体的皮肤着色(移植自 Unity Playable/Lightweight Skin)：材质参数 + 场景灯光。服装/鞋/发型/男角色不受影响。 */
+export function skinPanel(app) {
+  const F = fields(app);
+  return F.section('皮肤着色（女主角头 / 身体）', false,
+    F.check('skin.enabled', '启用', '关闭时和其他模型一样只显示贴图颜色'),
+    h('b', {}, '材质(对应 Unity Playable/Lightweight Skin)'),
+    F.color('skin.mat.color', '底色 Main Color'), F.range('skin.mat.wrap', '包裹 Wrap', {min: 0, max: 1, step: 0.01}), F.color('skin.mat.shadowTint', '明暗交界染色'), F.color('skin.mat.brightTint', '亮部颜色'), F.color('skin.mat.darkTint', '暗部颜色'),
+    F.color('skin.mat.ambientTint', '环境光颜色'), F.color('skin.mat.specColor', '高光颜色'), F.range('skin.mat.specPower', '高光锐度', {min: 4, max: 64, step: 0.5}),
+    h('b', {}, '场景灯光'),
+    F.color('skin.light.ambient', '环境光'), F.color('skin.light.color', '平行光颜色'), F.range('skin.light.intensity', '平行光强度', {min: 0, max: 2, step: 0.05}),
+    F.range('skin.light.dir.x', '光源方向 X(+ = 右)', {min: -1, max: 1, step: 0.001}), F.range('skin.light.dir.y', '光源方向 Y(+ = 上)', {min: -1, max: 1, step: 0.001}), F.range('skin.light.dir.z', '光源方向 Z(+ = 前)', {min: -1, max: 1, step: 0.001}));
 }
 
 let actx;

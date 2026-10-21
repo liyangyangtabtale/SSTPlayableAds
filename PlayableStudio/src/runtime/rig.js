@@ -1,7 +1,7 @@
 // 带骨架的角色基类：把蒙皮部件按骨骼名重绑到同一套骨架上，动画播放(淡入淡出、播完接下一个)，骨盆锁定。
 import * as THREE from 'three';
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
-import {styleMaterial} from './material.js';
+import {styleMaterial, skinMaterial} from './material.js';
 
 const sanitize = n => String(n || '').replace(/\s/g, '_').replace(/[\[\]\.:\/]/g, '');
 const stripDup = n => n.replace(/_\d+$/, '');
@@ -31,7 +31,7 @@ export class Rigged {
       m.parent && m.parent.remove(m); m.frustumCulled = false;
       m.bind(new THREE.Skeleton(bones, sk.boneInverses), m.bindMatrix);
       const src = Array.isArray(m.material) ? m.material[0] : m.material;
-      m.material = styleMaterial(src, this.light); m.material.userData.role = opts.role || null;
+      m.material = this.skinRig && (opts.role === 'head' || opts.role === 'body') ? skinMaterial(src, this.skinRig) : styleMaterial(src, this.light); m.material.userData.role = opts.role || null;   // 皮肤着色器只给设了 skinRig 的角色(女主角)的头/身体，其余只显示贴图颜色
       m.renderOrder = m.material.userData.order || 0; holder.add(m);
     }
     this.rig.add(holder); return holder;
@@ -44,10 +44,10 @@ export class Rigged {
   remove(slot) { const h = this.slots[slot]; if (!h) return; this.rig.remove(h); h.traverse(o => { if (o.isSkinnedMesh) o.skeleton.dispose && o.skeleton.dispose(); }); delete this.slots[slot]; }
 
   /* ---------- 动画 ---------- */
-  /** 去掉本角色里找不到节点的轨道(同一段动画给不同角色用时，避免 three 一直报警告) */
+  /** 去掉本角色里找不到节点(或表情目标)的轨道(同一段动画给不同角色用时，避免 three 一直报警告) */
   fit(clip) {
     if (this.clipCache.has(clip)) return this.clipCache.get(clip);
-    const tracks = clip.tracks.filter(t => { const n = t.name.slice(0, t.name.lastIndexOf('.')); return this.rig.getObjectByName(n); });
+    const tracks = clip.tracks.filter(t => { const n = t.name.slice(0, t.name.lastIndexOf('.')); const o = this.rig.getObjectByName(n); return o && (!t.name.endsWith('.morphTargetInfluences') || o.morphTargetInfluences); });   // 表情曲线只给有形变目标的网格(男角色的动画带表情曲线，但他的网格没有形变目标)
     const c = new THREE.AnimationClip(clip.name, clip.duration, tracks); this.clipCache.set(clip, c); return c;
   }
   step(clip, loop, maxLen) { if (!clip) return null; const c = this.fit(clip); return {clip: c, loop, length: maxLen > 0 ? Math.min(maxLen, c.duration) : c.duration}; }

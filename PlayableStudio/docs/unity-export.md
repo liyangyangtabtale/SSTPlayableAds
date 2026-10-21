@@ -10,7 +10,7 @@ node tools/unity-export/cli.mjs --project <Unity 工程根目录> --out assets-p
 #   没有 export.json 时，按下面的约定目录自动发现(Assets/PlayableExport)
 node tools/unity-export/cli.mjs --project <Unity 工程根目录> --spec export.json --out assets-pack.zip   # 用 export.json 精确指定
 ```
-也可以把 `unity-editor/PlayableExportMenu.cs` 拷进 Unity 工程的 `Assets/Editor/`，用菜单 `Playable/1. 创建导出目录`、`Playable/2. 导出资源包`。
+也可以把 `unity-editor/PlayableExportMenu.cs` 拷进 Unity 工程的 `Assets/Editor/`，用菜单 `Playable/Studio/1. 创建导出目录`、`Playable/Studio/2. 导出资源包`。
 导出后在 Studio 里：**资源库 → 导入资源包(ZIP)**。导入时会自动校验、压缩、生成图标，不合格的素材会明确告诉你原因。
 
 ## 二、目录约定（`Assets/PlayableExport/`）
@@ -23,8 +23,8 @@ node tools/unity-export/cli.mjs --project <Unity 工程根目录> --spec export.
 | `Makeup/` | 头部 UV 的 RGBA png(带透明通道的脸绘) | 每个文件一个妆容 |
 | `Animations/` | `*.fbx`，FBX 里每个 Clip(Animation 标签页切好的片段)成一个动画 | 文件名或 Clip 名以 `phone` 开头的当作手机动画；脸部表情用 BlendShape 曲线 |
 | `Phone/` | `phone.prefab` | 开场用的手机(静态网格；动画放 Animations) |
-| `Backgrounds/` | png/jpg | 开场/换装背景、结局背景，Studio 会按 9:16 居中裁切 |
-| `Sounds/` | mp3 / wav / ogg | 音效，建议 3 秒以内 |
+| `Backgrounds/` | png/jpg(仅作美术存放，**不进资源包**) | 背景在 Studio 资源库里单个上传 |
+| `Sounds/` | mp3 / wav / ogg(仅作美术存放，**不进资源包**) | 音效在 Studio 资源库里单个上传，建议 3 秒以内 |
 
 ## 三、材质怎么转换
 Unity 材质 → glTF 材质：底色贴图(`_MainTex`)、颜色(`_Color`)、**镂空**(`_Mode=Cutout` 或 `_ALPHATEST_ON`，阈值 `_Cutoff`)、**半透明**(`_Mode=Transparent/Fade` 或 `_ALPHABLEND_ON`)、**双面**(`_Cull=Off`)。其余着色器参数(法线、高光、自发光、Toon 贴图…)**不会带到 Web**——画面效果以 Studio 里的灯光/着色为准。

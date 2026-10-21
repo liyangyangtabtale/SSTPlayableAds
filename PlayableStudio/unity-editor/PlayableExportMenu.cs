@@ -9,9 +9,9 @@ using UnityEngine;
 public static class PlayableExportMenu
 {
     const string Root = "Assets/PlayableExport";
-    static readonly string[] Folders = { "Character", "Partner", "Looks", "Outfits", "Hair", "Shoes", "Makeup", "Animations", "Phone", "Backgrounds", "Sounds" };
+    static readonly string[] Folders = { "Looks", "Outfits", "Hair", "Shoes", "Makeup", "Animations", "Phone", "Backgrounds", "Sounds" };
 
-    [MenuItem("Playable/1. 创建导出目录")]
+    [MenuItem("Playable/Studio/1. 创建导出目录")]
     static void CreateFolders()
     {
         foreach (var f in Folders) Directory.CreateDirectory(Path.Combine(Root, f));
@@ -19,7 +19,7 @@ public static class PlayableExportMenu
         EditorUtility.DisplayDialog("Playable", "已创建 Assets/PlayableExport/…\n\n目录约定见 PlayableStudio/docs/unity-export.md", "好");
     }
 
-    [MenuItem("Playable/2. 导出资源包 (给 Studio 导入)")]
+    [MenuItem("Playable/Studio/2. 导出资源包 (给 Studio 导入)")]
     static void Export()
     {
         var tool = EditorPrefs.GetString("PlayableStudioPath", "");

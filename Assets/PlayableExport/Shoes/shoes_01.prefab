@@ -233,7 +233,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7614980880869019494}
   m_Layer: 0
-  m_Name: shoes_01
+  m_Name: casual_shoes_004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1383,7 +1383,7 @@ GameObject:
   - component: {fileID: 7580059774142665753}
   - component: {fileID: 4206858320833515843}
   m_Layer: 0
-  m_Name: shoes_01
+  m_Name: casual_shoes_004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -6,7 +6,7 @@ import {Library} from './library.js';
 import {normalizeConfig, defaultConfig, usedAssetIds, validateConfig, CHANNELS} from '../shared/schema.js';
 import {makePlayable, sizeReport, exportForChannel} from './build.js';
 import {b91dec, b91enc} from '../shared/b91.js';
-import {themePanel, flowPanel, characterPanel, layoutPanel, lightPanel, animPanel, soundPanel, exportPanel, validationPanel} from './panels.js';
+import {themePanel, flowPanel, characterPanel, layoutPanel, lightPanel, skinPanel, soundPanel, exportPanel, validationPanel} from './panels.js';
 import {libraryView} from './libraryView.js';
 import * as importer from './importer.js';
 
@@ -71,7 +71,7 @@ function resetProject() { if (!confirm('丢弃当前配置，恢复为默认配�
 
 /* ---------- 布局 ---------- */
 const left = h('div', {id: 'left'}), panelBox = h('div', {id: 'panels'}), libBox = h('div', {id: 'libbox', class: 'hide'}), valHolder = h('div', {id: 'valholder'});
-function renderPanels() { const y = left.scrollTop; panelBox.textContent = ''; panelBox.append(themePanel(app), flowPanel(app), characterPanel(app), layoutPanel(app), lightPanel(app), animPanel(app), soundPanel(app), exportPanel(app)); valHolder.textContent = ''; valHolder.append(validationBox()); left.scrollTop = y; updateStatus(); }
+function renderPanels() { const y = left.scrollTop; panelBox.textContent = ''; panelBox.append(themePanel(app), flowPanel(app), characterPanel(app), skinPanel(app), layoutPanel(app), lightPanel(app), soundPanel(app), exportPanel(app)); valHolder.textContent = ''; valHolder.append(validationBox()); left.scrollTop = y; updateStatus(); }
 function renderLibrary() { libBox.textContent = ''; libBox.append(libraryView(app, app.libTab)); }
 app.renderLibrary = renderLibrary;
 function setView(v) { app.view = v; panelBox.classList.toggle('hide', v !== 'config'); valHolder.classList.toggle('hide', v !== 'config'); libBox.classList.toggle('hide', v !== 'library'); tabBtns.forEach(([k, b]) => b.classList.toggle('on', k === v)); if (v === 'library') renderLibrary(); else renderPanels(); }

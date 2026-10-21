@@ -7,9 +7,9 @@
 - 服装 `outfit_NN`、鞋 `shoes_NN`、发型 `hair_NN`(NN 两位序号)；妆容 `makeup_NN`；背景 `bg_main`(开场/换装)、`bg_ending`(结局)。
 - 每件服装/鞋/发型：`Outfits/outfit_01.prefab` + `outfit_01.png`(图标) 放在目录最外层(导出工具只扫这一层)，它依赖的 FBX/材质/贴图放在 `Outfits/_src/outfit_01/`(以 `_` 开头的子目录导出工具不扫)。
 - 新增一件：复制一个 `_src/xxx` 目录改名，prefab/图标按下一个序号命名，序号不用连续，但不要重名。
-- 角色/男角色：`Character/` `Partner/` 里 `rig.fbx` 是骨架，每个部位是 `<部位>.fbx` + 同名 `<部位>.mat`(没有 prefab 时用这种方式)。角色部位名固定 `head body eye brow lash`；男角色 `body head hair eye lash clothes tongue`。
+- 角色/男角色(已不从资源包导入，固定用 Studio 内置模型；下面只是 Unity 里的整理结果，资源包不导出)：`Character/` `Partner/` 里 `rig.fbx` 是骨架，每个部位是 `<部位>.fbx` + 同名 `<部位>.mat`(没有 prefab 时用这种方式)。角色部位名固定 `head body eye brow lash`；男角色 `body head hair eye lash clothes tongue`。
 - 外观 `Looks/look_NN/head|body|eye|brow|lash.tga`；look_01 额外带 brow/lash，look_02/03 只换 head/body(其余沿用 look_01)。
-- 妆容图标放 `Makeup/_icons/`(不会被当成妆容)。
+- 妆容 `Makeup/makeup_NN.png`：头部 UV 的 RGBA 贴图(和头部贴图同布局，当前 512×512)。第一版 8 个已内置进 Studio(`assets/makeup/`，由 `node tools/build-makeup.mjs` 从这个目录生成，重新生成后需 `node tools/build-studio.mjs`)；之后新增妆容走“导入资源包 / 上传”。**图标：每个妆容旁边放同名加 `_icon` 的图片**(`makeup_01_icon.png`)，导出和导入都会带上；没有图标时自动用妆容的脸部裁图。服装/鞋/发型同理：prefab 旁边同名 png 就是图标，没有时由 Studio 用模型渲染。`Makeup/_icons/` 是旧图标，已不使用。
 
 ## 服装 / 鞋 / 发型 旧名 → 新名
 | 旧名 | 新名 |

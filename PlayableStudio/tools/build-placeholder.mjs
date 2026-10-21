@@ -69,7 +69,8 @@ const typeName = {outfit: 'outfit', hair: 'hair', shoes: 'shoes', makeup: 'makeu
 for (const [key, it] of Object.entries(legacy.items)) {
   const id = slug(key); const files = {};
   if (it.icon && fs.existsSync(A(`icons/${it.icon}.webp`))) files.icon = put(id, 'icon', 'webp', fs.readFileSync(A(`icons/${it.icon}.webp`)));
-  if (it.type === 'makeup') { files.tex = put(id, 'tex', 'webp', (await encodeImage(fs.readFileSync(A(`tex/${it.tex}.webp`)), 'image/webp', {max: 768, quality: 0.6})).bytes); item(id, 'makeup', nice(key), files); continue; }
+  if (it.type === 'makeup') continue;   // 妆容已改用 assets/makeup(build-makeup.mjs)，不再进占位包
+  if (false) { files.tex = put(id, 'tex', 'webp', (await encodeImage(fs.readFileSync(A(`tex/${it.tex}.webp`)), 'image/webp', {max: 768, quality: 0.6})).bytes); item(id, 'makeup', nice(key), files); continue; }
   const b = await buildParts(id, it.parts.map(p => ({model: p.model, node: p.node, mats: p.mats})));
   item(id, it.type, nice(key), {...files, ...b.files}, {parts: b.parts});
 }

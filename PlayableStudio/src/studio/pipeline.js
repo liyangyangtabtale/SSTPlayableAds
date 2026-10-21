@@ -16,8 +16,21 @@ const stripDup = n => n.replace(/_\d+$/, '');
 export const LIMITS = {tex: {outfit: 1024, hair: 512, shoes: 512, character: 1024, partner: 1024, phone: 512}, tris: {outfit: 20000, hair: 15000, shoes: 8000}};
 
 /* ---------- 图片 ---------- */
+/** TGA(无压缩/RLE，24/32 位)解码成 ImageData；浏览器不能直接读 TGA。不是 TGA 返回 null */
+function decodeTga(b) {
+  if (b.length < 18 || ![2, 10].includes(b[2]) || ![24, 32].includes(b[16]) || (b[1] !== 0 && b[1] !== 1)) return null;
+  const idLen = b[0], type = b[2], w = b[12] | b[13] << 8, h = b[14] | b[15] << 8, bpp = b[16], desc = b[17], px = bpp / 8; if (!w || !h || w > 8192 || h > 8192) return null;
+  let p = 18 + idLen + (b[1] ? (b[5] | b[6] << 8) * Math.ceil(b[7] / 8) : 0); const out = new Uint8ClampedArray(w * h * 4); let n = 0;
+  const put = (o, i) => { out[o] = b[i + 2]; out[o + 1] = b[i + 1]; out[o + 2] = b[i]; out[o + 3] = px === 4 ? b[i + 3] : 255; };
+  if (type === 2) for (; n < w * h && p + px <= b.length; n++, p += px) put(n * 4, p);
+  else while (n < w * h && p < b.length) { const hd = b[p++], c = (hd & 127) + 1; if (hd & 128) { for (let k = 0; k < c && n < w * h; k++) put((n++) * 4, p); p += px; } else for (let k = 0; k < c && n < w * h; k++, p += px) put((n++) * 4, p); }
+  const rows = new Uint8ClampedArray(w * h * 4), top = (desc & 0x20) !== 0; for (let y = 0; y < h; y++) { const sy = top ? y : h - 1 - y; rows.set(out.subarray(sy * w * 4, (sy + 1) * w * 4), y * w * 4); }
+  return new ImageData(rows, w, h);
+}
+const isPngJpgWebp = b => (b[0] === 0x89 && b[1] === 0x50) || (b[0] === 0xff && b[1] === 0xd8) || (b[0] === 0x52 && b[1] === 0x49);
 export async function imageToWebp(bytes, {max = 1024, quality = 0.8, mime = 'image/png', cover = null} = {}) {
-  const bmp = await createImageBitmap(new Blob([bytes], {type: mime}));
+  const tga = !isPngJpgWebp(bytes) ? decodeTga(bytes) : null;
+  const bmp = tga ? await createImageBitmap(tga) : await createImageBitmap(new Blob([bytes], {type: mime}));
   let w = bmp.width, h = bmp.height, sx = 0, sy = 0, sw = w, sh = h;
   if (cover) { const r = cover[0] / cover[1]; if (w / h > r) { sw = Math.round(h * r); sx = Math.round((w - sw) / 2); } else { sh = Math.round(w / r); sy = Math.round((h - sh) / 2); } w = sw; h = sh; }
   const k = Math.min(1, max / Math.max(w, h)); const cw = Math.max(1, Math.round(w * k)), ch = Math.max(1, Math.round(h * k));

@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import {Character} from './character.js';
 import {Phone} from './phone.js';
 import {LightRig} from './lighting.js';
+import {SkinRig} from './skin.js';
 import {loadClip} from './loaders.js';
 import {Sfx} from './audio.js';
 import {STAGE_LABELS} from '../shared/schema.js';
@@ -22,7 +23,7 @@ export class Game {
     this.scene = new THREE.Scene(); this.camera = new THREE.PerspectiveCamera(cfg.camera.fov, 9 / 16, .1, 200);
     this.light = new LightRig(); this.light.apply(cfg.lighting); this.sfx = new Sfx(store, cfg.sound);
     this.clock = new THREE.Clock(); this.token = 0; this.groups = {}; this.last = {};
-    this.camT = {x: 0, y: 1, z: 4, fov: cfg.camera.fov}; this.vel = [{v: 0}, {v: 0}, {v: 0}, {v: 0}];
+    this.camT = {x: 0, y: 1, z: 4, fov: cfg.camera.fov, pitch: 0}; this.vel = [{v: 0}, {v: 0}, {v: 0}, {v: 0}, {v: 0}];
     this.rotY = 0; this.canRotate = false; this.rotVel = 0; this.dragged = false; this.phase = 'init';
   }
   setSize(w, h) { this.renderer.setSize(w, h, false); this.camera.aspect = w / h; this.camera.updateProjectionMatrix(); }
@@ -36,7 +37,8 @@ export class Game {
     this.ui.applyTheme(cfg.theme); this.setBg('play');
     for (const [ev, ids] of Object.entries(cfg.animations)) this.groups[ev] = (ids || []).filter(id => st.has(id)).map(id => loadClip(st, id));
     if (!cfg.character.model || !st.has(cfg.character.model)) throw new Error('配置里没有角色模型，或资源包里缺少它');
-    this.girl = new Character(this.light); await this.girl.build(st, cfg.character.model);
+    this.girl = new Character(this.light); if (cfg.skin && cfg.skin.enabled) this.girl.skinRig = new SkinRig(cfg.skin);   // 皮肤着色只给女主角
+    await this.girl.build(st, cfg.character.model);
     if (cfg.character.look && st.has(cfg.character.look)) await this.girl.setLook(cfg.character.look);
     const jobs = [];
     if (cfg.character.defaultOutfit) jobs.push(this.girl.equip('outfit', cfg.character.defaultOutfit));
@@ -77,7 +79,7 @@ export class Game {
   /* ---------- 相机 / 布局 ---------- */
   shot(which, snap) {
     const c = this.cfg.camera, T = this.camT;
-    if (which === 'outro') Object.assign(T, {x: c.outroShiftX, y: c.outroHeight, z: c.outroDistance}); else Object.assign(T, {x: c.shiftX, y: c.height, z: c.distance});
+    if (which === 'outro') Object.assign(T, {x: c.outroShiftX, y: c.outroHeight, z: c.outroDistance, pitch: c.outroPitch || 0}); else Object.assign(T, {x: c.shiftX, y: c.height, z: c.distance, pitch: c.pitch || 0});
     T.fov = c.fov; if (snap) { this.camera.position.set(T.x, T.y, T.z); this.camera.fov = T.fov; this.camera.updateProjectionMatrix(); }
   }
   layout(mode) {
@@ -169,9 +171,10 @@ export class Game {
 
   /* ---------- 每帧 ---------- */
   updateCamera(dt) {
-    const T = this.camT, c = this.camera, p = c.position, sm = .35;
+    const T = this.camT, c = this.camera, p = this.camP || (this.camP = new THREE.Vector3().copy(c.position)), sm = .35;
     p.set(smoothDamp(p.x, T.x, this.vel[0], sm, dt), smoothDamp(p.y, T.y, this.vel[1], sm, dt), smoothDamp(p.z, T.z, this.vel[2], sm, dt));
     c.fov = smoothDamp(c.fov, T.fov, this.vel[3], sm, dt); c.updateProjectionMatrix();
+    this.pitch = smoothDamp(this.pitch || 0, T.pitch, this.vel[4], sm, dt); const ph = this.pitch * Math.PI / 180; c.rotation.x = -ph; c.position.set(p.x, p.y + p.z * Math.sin(ph), p.z * Math.cos(ph));   // 俯仰角：镜头绕角色(看向的点 x,高度,0)转，正数从上往下看(俯视)，负数从下往上看(仰视)；角色始终留在画面里
   }
   placeShadow(s, root) { const sh = this.light.shadow; s.visible = sh.enabled && root.visible; s.position.set(root.position.x + sh.off.x * root.scale.x, .01, root.position.z + (sh.off.y + .12) * root.scale.x); s.scale.setScalar(root.scale.x * sh.size); s.material.opacity = sh.opacity; }   // 略往镜头一侧偏一点(+.12)，斜着看时才看得见
   frame() {

@@ -1810,7 +1810,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5237920811281116570}
   m_Layer: 0
-  m_Name: outfit_04
+  m_Name: designer_dress_424
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1911,7 +1911,7 @@ GameObject:
   - component: {fileID: 599345210182057970}
   - component: {fileID: 3828718550488096011}
   m_Layer: 0
-  m_Name: outfit_04
+  m_Name: designer_dress_424
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

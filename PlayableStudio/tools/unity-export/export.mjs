@@ -3,6 +3,7 @@
 import fs from 'fs'; import path from 'path'; import os from 'os'; import {execFileSync} from 'child_process'; import sharp from 'sharp'; import JSZip from 'jszip';
 import {NodeIO} from '@gltf-transform/core'; import {ALL_EXTENSIONS} from '@gltf-transform/extensions';
 import * as yaml from 'js-yaml';
+import {fbxAnimDoc} from './fbx-anim.mjs';
 import {setProject, ASSETS, pathOf, readDocs, readMaterial, prefabRenderers, fbxNames, guidIndex} from './unity.mjs';
 
 const io = new NodeIO().registerExtensions(ALL_EXTENSIONS);
@@ -31,7 +32,9 @@ async function texPng(file) {     // 任何贴图 -> png 字节
 function matInfo(matPath) {
   const m = readMaterial(matPath); if (!m) return null; const f = m.floats || {}, c = (m.colors || {})._Color;
   const cut = /_ALPHATEST_ON/.test(m.keywords) || f._Mode === 1, blend = f._DstBlend === 10 || /_ALPHABLEND_ON/.test(m.keywords) || f._Mode === 2;
-  return {tex: m.mainTex, color: c ? [c.r, c.g, c.b] : null, alpha: cut ? {mode: 'MASK', cutoff: f._Cutoff ?? 0.5} : blend ? {mode: 'BLEND'} : null, double: f._Cull === 0, name: m.name};
+  let tex = m.mainTex;   // 原工程里发型材质的 _MainTex 是断的(运行时按名字赋值)：退回到同目录里和材质同前缀的贴图(hair_01_color_001.mat -> hair_01.tga)
+  if (!tex) { const dir = path.dirname(matPath), stemM = path.basename(matPath, '.mat').replace(/_color_\d+.*$/, ''); const hit = ['tga', 'png', 'jpg'].map(e => path.join(dir, stemM + '.' + e)).find(fs.existsSync); if (hit) tex = hit; }
+  return {tex, color: c ? [c.r, c.g, c.b] : null, alpha: cut ? {mode: 'MASK', cutoff: f._Cutoff ?? 0.5} : blend ? {mode: 'BLEND'} : null, double: f._Cull === 0, name: m.name};
 }
 
 /* ---------- FBX -> GLB ---------- */
@@ -41,6 +44,13 @@ function fbxToGlbBytes(fbx) {
   return fbxCache.get(fbx);
 }
 const readFbx = fbx => io.readBinary(fbxToGlbBytes(fbx));
+/** 动画 FBX：FBX2glTF 对某些 FBX 会崩溃(贴图引用找不到图片，段错误)，这时改用 three 的 FBXLoader 解析(骨骼/形变曲线一致)，骨骼名按角色骨架还原 */
+let charRigFbx = null, rigNameCache = null;
+async function rigNames() { if (!rigNameCache) rigNameCache = charRigFbx ? (await readFbx(charRigFbx)).getRoot().listNodes().map(n => n.getName()) : []; return rigNameCache; }
+async function readAnimFbx(fbx) {
+  try { return await readFbx(fbx); }
+  catch (e) { console.warn(`  ${stem(fbx)}：FBX2glTF 读不了，改用 FBXLoader`); return fbxAnimDoc(fbx, await rigNames()); }
+}
 function stripAnim(doc) { for (const a of doc.getRoot().listAnimations()) a.dispose(); }
 /** 一个 FBX 里的网格节点，按节点名指定材质(Unity 材质路径数组，对应子网格)；'*' = 全部节点 */
 async function wearableGlb(fbx, nodeMats) {
@@ -65,6 +75,11 @@ async function rigGlb(fbx) { const doc = await readFbx(fbx); stripAnim(doc); con
 /** prefab -> 一组 glb(同一个 FBX 一个文件) + parts 列表 */
 async function prefabGlbs(prefab, label) {
   const rends = prefabRenderers(prefab); if (!rends.length) throw new Error(`${label}：prefab 里没有找到蒙皮网格渲染器`);
+  for (const r of rends) {   // prefab 里材质引用是断的(发型)：用 FBX 同目录里以 FBX 名开头的 .mat 代替
+    if (!r.materials.some(m => !m)) continue; const dir = path.dirname(r.fbx), st = path.basename(r.fbx, path.extname(r.fbx));
+    const guess = fs.readdirSync(dir).filter(f => f.endsWith('.mat') && f.startsWith(st)).sort()[0];
+    if (guess) r.materials = r.materials.map(m => m || path.join(dir, guess));
+  }
   const byFbx = new Map(); for (const r of rends) { if (!byFbx.has(r.fbx)) byFbx.set(r.fbx, {}); byFbx.get(r.fbx)[r.node || '*'] = r.materials; }
   const out = [], parts = []; let i = 0;
   for (const [fbx, nm] of byFbx) { const f = 'p' + i++; out.push([f, await wearableGlb(fbx, nm)]); for (const [node] of Object.entries(nm)) parts.push({file: f, ...(node !== '*' ? {node} : {})}); }
@@ -82,11 +97,11 @@ async function partGlbs(p, label, A) {
 async function animClips(fbx) {
   const meta = (yaml.load(fs.readFileSync(fbx + '.meta', 'utf8').replace(/^(\s+\d+): (-?\d{15,})\s*$/gm, '$1: "$2"')) || {}).ModelImporter || {};
   const clips = ((meta.animations || {}).clipAnimations || []).map(c => ({name: c.name, first: +c.firstFrame, last: +c.lastFrame}));
-  const base = await readFbx(fbx); const r = base.getRoot(); const anims = r.listAnimations(); if (!anims.length) throw new Error(stem(fbx) + '：FBX 里没有动画');
+  const base = await readAnimFbx(fbx); const r = base.getRoot(); const anims = r.listAnimations(); if (!anims.length) throw new Error(stem(fbx) + '：FBX 里没有动画');
   const longest = anims.reduce((a, b) => (L(b) > L(a) ? b : a)); function L(a) { return Math.max(...a.listSamplers().map(s => s.getInput().getMax([0])[0])); }
   const list = clips.length ? clips : [{name: stem(fbx), first: 0, last: Math.round(L(longest) * 30)}]; const out = [];
   for (const c of list) {
-    const doc = await readFbx(fbx); const root = doc.getRoot(); for (const m of root.listMeshes()) m.dispose(); for (const s of root.listSkins()) s.dispose(); for (const m of root.listMaterials()) m.dispose(); for (const t of root.listTextures()) t.dispose();
+    const doc = await readAnimFbx(fbx); const root = doc.getRoot(); for (const m of root.listMeshes()) m.dispose(); for (const s of root.listSkins()) s.dispose(); for (const m of root.listMaterials()) m.dispose(); for (const t of root.listTextures()) t.dispose();
     const as = root.listAnimations(); const keep = as.reduce((a, b) => (L(b) > L(a) ? b : a)); for (const a of as) if (a !== keep) a.dispose(); keep.setName(c.name);
     const t0 = c.first / 30, t1 = c.last / 30; const snap = new Map(); for (const s of keep.listSamplers()) { const inp = s.getInput(); if (!snap.has(inp)) snap.set(inp, inp.getArray().slice()); }
     for (const s of keep.listSamplers()) {      // 按帧范围切段(30fps)；边界按插值补点，常量轨道也能切
@@ -104,26 +119,26 @@ async function animClips(fbx) {
 /**
  * spec(也是 export.json 的格式)：
  * { character:{rig:'Assets/..fbx', parts:[{role:'head',prefab:'Assets/..prefab'},…]}, partner:{…同上}, looks:[{name, head,body,eye,brow,lash(贴图路径)}],
- *   outfits:[{name,prefab,icon?}], hair:[…], shoes:[…], makeup:[{name,texture}], animations:[{fbx, prefix?, kind?}], phone:{prefab}, backgrounds:[{name,image}], sounds:[{name,file}] }
+ *   outfits:[{name,prefab,icon?}], hair:[…], shoes:[…], makeup:[{name,texture,icon?}], animations:[{fbx, prefix?, kind?}], phone:{prefab}, backgrounds:[{name,image}], sounds:[{name,file}] }
  */
 export async function exportSpec(spec, log = console.log) {
   const items = {}, files = new Map(); const warn = [];
   const add = (it, fl) => { items[it.id] = {...it, collection: it.collection || 'unity', tags: it.tags || [], meta: {raw: true, ...(it.meta || {})}}; for (const [p, b] of fl) files.set(p, b); };
   const A = p => { const f = path.isAbsolute(p) ? p : path.join(path.dirname(ASSETS), p); if (!fs.existsSync(f)) throw new Error('找不到文件 ' + p); return f; };
   const wearables = async (list, type) => { for (const w of list || []) { try {
-    const id = slug(type + '_' + w.name), g = await partGlbs(w, w.name, A), fl = new Map(), fm = {};
+    const id = (slug(w.name).startsWith(type + '_') ? slug(w.name) : slug(type + '_' + w.name)), g = await partGlbs(w, w.name, A), fl = new Map(), fm = {};
     for (const [f, b] of g.files) { fm[f] = `${id}/${f}.glb`; fl.set(fm[f], b); }
     if (w.icon) { fm.icon = `${id}/icon.png`; fl.set(fm.icon, fs.readFileSync(A(w.icon))); }
     add({id, type, name: w.name, files: fm, meta: {parts: g.parts}}, fl); log(`  ${type} ${w.name}`); } catch (e) { warn.push(`${type} ${w.name}：${e.message}`); } } };
   const rigged = async (spec2, type) => {
-    if (!spec2) return; const id = type; const fl = new Map(), fm = {}, parts = []; fm.rig = `${id}/rig.glb`; fl.set(fm.rig, await rigGlb(A(spec2.rig)));
+    if (!spec2) return; const id = type; const fl = new Map(), fm = {}, parts = []; if (type === 'character') charRigFbx = A(spec2.rig); fm.rig = `${id}/rig.glb`; fl.set(fm.rig, await rigGlb(A(spec2.rig)));
     let n = 0; for (const p of spec2.parts) { const g = await partGlbs(p, p.role, A); for (const [f, b] of g.files) { const k = 'p' + n++; fm[k] = `${id}/${k}.glb`; fl.set(fm[k], b); for (const x of g.parts.filter(q => q.file === f)) parts.push({file: k, role: p.role, ...(x.node ? {node: x.node} : {})}); } }
     add({id, type, name: type === 'partner' ? 'Partner' : 'Heroine', files: fm, meta: {parts}}, fl); log('  ' + type);
   };
   await rigged(spec.character, 'character'); await rigged(spec.partner, 'partner');
   for (const l of spec.looks || []) { const id = slug('look_' + l.name), fl = new Map(), fm = {}; for (const r of ['head', 'body', 'eye', 'brow', 'lash']) if (l[r]) { fm[r] = `${id}/${r}.png`; fl.set(fm[r], await texPng(A(l[r]))); } add({id, type: 'look', name: l.name, files: fm}, fl); log('  look ' + l.name); }
   await wearables(spec.outfits, 'outfit'); await wearables(spec.hair, 'hair'); await wearables(spec.shoes, 'shoes');
-  for (const m of spec.makeup || []) { const id = slug('makeup_' + m.name), p = `${id}/tex.png`; add({id, type: 'makeup', name: m.name, files: {tex: p}}, new Map([[p, await texPng(A(m.texture))]])); log('  makeup ' + m.name); }
+  for (const m of spec.makeup || []) { const id = (slug(m.name).startsWith('makeup_') ? slug(m.name) : slug('makeup_' + m.name)), p = `${id}/tex.png`, fm = {tex: p}, fl = new Map([[p, await texPng(A(m.texture))]]); if (m.icon) { fm.icon = `${id}/icon.png`; fl.set(fm.icon, await texPng(A(m.icon))); } add({id, type: 'makeup', name: m.name, files: fm}, fl); log('  makeup ' + m.name); }
   for (const b of spec.backgrounds || []) { const id = slug('bg_' + b.name), ext = path.extname(b.image).toLowerCase().replace('.', '') || 'png', p = `${id}/image.${ext}`; add({id, type: 'background', name: b.name, files: {image: p}}, new Map([[p, /tga/.test(ext) ? await texPng(A(b.image)) : fs.readFileSync(A(b.image))]])); log('  background ' + b.name); }
   for (const s of spec.sounds || []) { const id = slug('sfx_' + s.name), ext = path.extname(s.file).toLowerCase().replace('.', ''), p = `${id}/audio.${ext}`; add({id, type: 'sound', name: s.name, files: {audio: p}, meta: {event: s.event}}, new Map([[p, fs.readFileSync(A(s.file))]])); log('  sound ' + s.name); }
   if (spec.phone) { const g = await prefabGlbs(A(spec.phone.prefab), 'phone'); add({id: 'phone', type: 'phone', name: 'Phone', files: {model: 'phone/model.glb'}}, new Map([['phone/model.glb', g.files[0][1]]])); log('  phone'); }
@@ -142,17 +157,26 @@ export function discover(root = 'Assets/PlayableExport') {
   // 部位：有 <部位>.prefab 用 prefab；没有就用 <部位>.fbx + 同名 .mat(rig.fbx 不算部位)
   const parts = d => [...ls(d, /\.prefab$/i).map(p => ({role: stem(p).toLowerCase(), prefab: p})), ...ls(d, /\.fbx$/i).filter(f => stem(f).toLowerCase() !== 'rig' && !ls(d, /\.prefab$/i).some(p => stem(p).toLowerCase() === stem(f).toLowerCase())).map(f => { const m = f.replace(/\.fbx$/i, '.mat'); return {role: stem(f).toLowerCase(), fbx: f, ...(fs.existsSync(path.join(path.dirname(ASSETS), m)) ? {material: m} : {})}; })];
   const spec = {};
-  const rigFbx = ls('Character', /^rig\.fbx$/i)[0]; if (rigFbx) spec.character = {rig: rigFbx, parts: parts('Character')};
-  const pRig = ls('Partner', /^rig\.fbx$/i)[0]; if (pRig) spec.partner = {rig: pRig, parts: parts('Partner')};
+  // 角色和男角色固定用 Studio 内置的模型，不再自动导出(需要时仍可在 export.json 里写 character / partner)
   const lookDirs = fs.existsSync(path.join(base, 'Looks')) ? fs.readdirSync(path.join(base, 'Looks'), {withFileTypes: true}).filter(e => e.isDirectory()) : [];
   spec.looks = lookDirs.map(d => { const o = {name: d.name}; for (const f of fs.readdirSync(path.join(base, 'Looks', d.name))) { const m = f.match(/^(head|body|eye|brow|lash)\.(png|tga|jpg)$/i); if (m) o[m[1].toLowerCase()] = path.join(root, 'Looks', d.name, f); } return o; });
   const w = (d) => ls(d, /\.prefab$/i).map(p => { const ic = ['png', 'jpg'].map(e => p.replace(/\.prefab$/i, '.' + e)).find(f => fs.existsSync(path.join(path.dirname(ASSETS), f))); return {name: stem(p), prefab: p, ...(ic ? {icon: ic} : {})}; });
   spec.outfits = w('Outfits'); spec.hair = w('Hair'); spec.shoes = w('Shoes');
-  spec.makeup = ls('Makeup', /\.(png|tga)$/i).map(p => ({name: stem(p), texture: p}));
-  spec.backgrounds = ls('Backgrounds', /\.(png|jpg|jpeg|tga)$/i).map(p => ({name: stem(p), image: p}));
-  spec.sounds = ls('Sounds', /\.(mp3|wav|ogg)$/i).map(p => ({name: stem(p), file: p, event: stem(p)}));
-  const ph = ls('Phone', /\.prefab$/i)[0]; if (ph) spec.phone = {prefab: ph};
-  spec.animations = ls('Animations', /\.fbx$/i).map(f => ({fbx: f}));
+  spec.makeup = ls('Makeup', /\.(png|tga)$/i).filter(p => !/_icon$/i.test(stem(p))).map(p => { const ic = ['png', 'jpg', 'tga'].map(x => path.join(path.dirname(p), stem(p) + '_icon.' + x)).find(f => fs.existsSync(path.join(path.dirname(ASSETS), f))); return {name: stem(p), texture: p, ...(ic ? {icon: ic} : {})}; });   // 妆容图标：和贴图同名加 _icon 后缀
+  // 背景和音效不走资源包：在 Studio 资源库里单个上传(export.json 里仍可手写 backgrounds / sounds)
+  // 手机也固定内置在 Studio 里，不进资源包
+  // 动画不进资源包：它们固定内置在 Studio 里，由 tools/build-animations.mjs 直接从 Assets/PlayableExport/Animations 烘焙
   return spec;
+}
+/** 内置动画：读 Assets/PlayableExport/Animations(和 Phone)下所有 FBX，每个 Clip 一个只含动画的 glb；骨骼名按 Character/rig.fbx 还原 */
+export async function exportAnimations(root = 'Assets/PlayableExport') {
+  const base = path.join(path.dirname(ASSETS), root);
+  const rig = path.join(base, 'Character', 'rig.fbx'); if (fs.existsSync(rig)) charRigFbx = rig;
+  const out = [];
+  for (const d of ['Animations', 'Phone']) {      // Phone/ 里的 FBX(手机 + 它的动画)也要取动画
+    const dir = path.join(base, d); if (!fs.existsSync(dir)) continue;
+    for (const f of fs.readdirSync(dir).filter(f => /\.fbx$/i.test(f)).sort()) { try { for (const c of await animClips(path.join(dir, f))) out.push({...c, file: d + '/' + f}); } catch (e) { if (d === 'Animations') throw e; } }   // Phone/ 里的 FBX 没有动画就跳过
+  }
+  return out;
 }
 export {setProject};
